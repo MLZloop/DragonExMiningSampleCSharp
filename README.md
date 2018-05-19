@@ -1,2 +1,2 @@
 # DragonExMiningSampleCSharp
-Auto mining winform tool for dragooned
+Auto mining winform tool for dragonex
