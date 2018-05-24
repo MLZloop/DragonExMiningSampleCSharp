@@ -21,6 +21,8 @@ RunMode
 
 可以在测试模式确认后再改为NORMAL。
 
+其他界面相关说明可参考DragonExMineToolReadMe.png
+
 ### 关于BUG
 有任何问题请提Issue。
 
