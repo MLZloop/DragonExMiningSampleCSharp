@@ -1,6 +1,8 @@
 ### DragonExMiningSampleCSharp
 A simple auto mining winform tool for dragonex.io
 
+一个基于C#的简单龙网自动挖矿交易程序
+
 ### 免责声明
 使用本程序造成的任何损失，作者不负任何责任。
 
