@@ -3,6 +3,10 @@ A simple auto mining winform tool for dragonex.io
 
 一个基于C#的简单龙网自动挖矿交易程序
 
+### Require
+
+.Net Framework 4.5.2 Newtonsoft.Json 11.0.2
+
 ### 免责声明
 使用本程序造成的任何损失，作者不负任何责任。
 
@@ -11,7 +15,7 @@ A simple auto mining winform tool for dragonex.io
 龙网注册链接：https://dragonex.im/account/register?inviteId=1086620
 
 ### 使用说明
-在App.config中
+在App.config（编译版本），DragonExMiningSampleCSharp.exe.config（Release版）中
 
 通过以下参数设定账户A和账户B的API信息（默认为***）
 
@@ -27,6 +31,7 @@ RunMode
 
 ### 关于BUG
 有任何问题请提Issue。
+需要增加功能也可以联系我。
 
 ### 其他
 接下来我有可能会做一个针对龙网的对冲搬砖程序（平时没有时间所以可能会拖的比较长，会在Github公开源码）。
