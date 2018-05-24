@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DragonExMiningSampleCSharp.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LogPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\DragonEx\Apis</Value>
+    </Setting>
+    <Setting Name="LogLevels" Type="System.String" Scope="User">
+      <Value Profile="(Default)">INFO,TRACE,ERROR</Value>
+    </Setting>
+    <Setting Name="RunMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TEST</Value>
+    </Setting>
+    <Setting Name="DragonEx_KeyA" Type="System.String" Scope="User">
+      <Value Profile="(Default)">***</Value>
+    </Setting>
+    <Setting Name="DragonEx_SecretA" Type="System.String" Scope="User">
+      <Value Profile="(Default)">***</Value>
+    </Setting>
+    <Setting Name="DragonEx_KeyB" Type="System.String" Scope="User">
+      <Value Profile="(Default)">***</Value>
+    </Setting>
+    <Setting Name="DragonEx_SecretB" Type="System.String" Scope="User">
+      <Value Profile="(Default)">***</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
