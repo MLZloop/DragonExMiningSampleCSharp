@@ -21,6 +21,10 @@ A simple auto mining winform tool for dragonex.io
 
 DragonEx_KeyA，DragonEx_SecretA，DragonEx_KeyB，DragonEx_SecretB
 
+通过以下参数设定语言（英语：English，中文：Chinese）
+
+MultiLanguage
+
 通过以下参数设置执行模式为NORMAL（默认为测试模式TEST）
 
 RunMode
