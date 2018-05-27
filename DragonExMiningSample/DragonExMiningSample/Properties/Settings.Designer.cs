@@ -106,5 +106,17 @@ namespace DragonExMiningSampleCSharp.Properties {
                 this["DragonEx_SecretB"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("English")]
+        public string MultiLanguage {
+            get {
+                return ((string)(this["MultiLanguage"]));
+            }
+            set {
+                this["MultiLanguage"] = value;
+            }
+        }
     }
 }

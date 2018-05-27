@@ -57,9 +57,12 @@ namespace DragonExMiningSampleCSharp.Apis.DragonEx
         /// </summary>
         public void UpdateUserInfo(bool pairChanged)
         {
-            if (ConfigTool.RunMode == RunMode.TEST && !pairChanged)
+            if (ConfigTool.RunMode == RunMode.TEST)
             {
-                // Nothing to do
+                if (pairChanged)
+                {
+                    UserAmounts = new UserAmounts(Constants.TRADE_NAME_DRAGON_EX, 100, 1);
+                }
             }
             else
             {

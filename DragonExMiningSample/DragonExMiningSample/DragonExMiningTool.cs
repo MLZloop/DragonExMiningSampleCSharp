@@ -3,6 +3,7 @@ using DragonExMiningSampleCSharp.Apis.Config;
 using DragonExMiningSampleCSharp.Apis.DragonEx;
 using DragonExMiningSampleCSharp.Apis.Entity;
 using DragonExMiningSampleCSharp.Apis.Log;
+using DragonExMiningSampleCSharp.MultiLanguage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -133,6 +134,7 @@ namespace DragonExMiningSampleCSharp
         public DragonExMiningTool()
         {
             InitializeComponent();
+            MultiLanConfig.Instance.ChangeMultiLan(this);
         }
 
         /// <summary>
@@ -166,8 +168,11 @@ namespace DragonExMiningSampleCSharp
             catch (Exception ex)
             {
                 //Error happened when getting
-                var logMsg = "Exception happened when getting User Infos.Details:" + Environment.NewLine
-                    + ex.Message + Environment.NewLine + ex.StackTrace;
+                var logMsg = MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_GETTING_USER_INFO") 
+                    + Environment.NewLine
+                    + ex.Message 
+                    + Environment.NewLine 
+                    + ex.StackTrace;
                 Console.WriteLine(logMsg);
                 LogTool.LogTradeInfo(logMsg, LogLevels.ERROR);
             }
@@ -225,8 +230,10 @@ namespace DragonExMiningSampleCSharp
                 catch (Exception ex)
                 {
                     //Error happened when getting
-                    var logMsg = "Exception happened when getting Ticker.Details:" + Environment.NewLine
-                        + ex.Message + Environment.NewLine + ex.StackTrace;
+                    var logMsg = MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_GETTING_TICKER") 
+                        + Environment.NewLine
+                        + ex.Message 
+                        + Environment.NewLine + ex.StackTrace;
                     Console.WriteLine(logMsg);
                     LogTool.LogTradeInfo(logMsg, LogLevels.ERROR);
                 }
@@ -318,14 +325,14 @@ namespace DragonExMiningSampleCSharp
                                 if (!mineAmountUnlimited)
                                 {
                                     logTxt.Text = "";
-                                    ResetTradingLog("Trading A=>B is ended.No Coin or Base is available.", true);
+                                    ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_ENDED"), true);
                                 }
                             }
                         }
                         else
                         {
                             logTxt.Text = "";
-                            ResetTradingLog("Trading A=>B is ended.No Coin or Base is available.", true);
+                            ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_ENDED"), true);
                         }
                     }
                     break;
@@ -365,14 +372,14 @@ namespace DragonExMiningSampleCSharp
                                 if (!mineAmountUnlimited)
                                 {
                                     logTxt.Text = "";
-                                    ResetTradingLog("Trading B=>A is ended.No Coin or Base is available.", true);
+                                    ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_ENDED"), true);
                                 }
                             }
                         }
                         else
                         {
                             logTxt.Text = "";
-                            ResetTradingLog("Trading B=>A is ended.No Coin or Base is available.", true);
+                            ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_ENDED"), true);
                         }
                     }
                     break;
@@ -396,7 +403,7 @@ namespace DragonExMiningSampleCSharp
                                 && bToAMineAmount * minePrice <= ConfigTool.MinimumTradeUsdtAmount)
                             {
                                 logTxt.Text = "";
-                                ResetTradingLog("Trade is ended.Trade amount and price is under minimum.", true);
+                                ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_UNDER_MINIMUM"), true);
                                 return;
                             }
 
@@ -476,7 +483,7 @@ namespace DragonExMiningSampleCSharp
                             else
                             {
                                 logTxt.Text = "";
-                                ResetTradingLog("Trade is ended.Trade amount and price is under minimum.", true);
+                                ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_UNDER_MINIMUM"), true);
                             }
                         }
                     }
@@ -496,8 +503,8 @@ namespace DragonExMiningSampleCSharp
             aAccCoinLbl.Text = ConfigTool.CurrentCoin.ToUpper() + ":";
             bAccBaseLbl.Text = ConfigTool.CurrentBase.ToUpper() + ":";
             bAccCoinLbl.Text = ConfigTool.CurrentCoin.ToUpper() + ":";
-            profitsAllBaseLbl.Text = "All " + ConfigTool.CurrentBase.ToUpper() + ":";
-            profitsAllCoinLbl.Text = "All " + ConfigTool.CurrentCoin.ToUpper() + ":";
+            profitsAllBaseLbl.Text = MultiLanConfig.Instance.GetKeyValue("LABEL_ALL")  + " " + ConfigTool.CurrentBase.ToUpper() + ":";
+            profitsAllCoinLbl.Text = MultiLanConfig.Instance.GetKeyValue("LABEL_ALL")  + " " + ConfigTool.CurrentCoin.ToUpper() + ":";
             autoTradeChk.Checked = false;
 
             if (getMarketInfoThread == null || !getMarketInfoThread.IsAlive)
@@ -599,8 +606,8 @@ namespace DragonExMiningSampleCSharp
                 aAccCoinLbl.Text = ConfigTool.CurrentCoin.ToUpper() + ":";
                 bAccBaseLbl.Text = ConfigTool.CurrentBase.ToUpper() + ":";
                 bAccCoinLbl.Text = ConfigTool.CurrentCoin.ToUpper() + ":";
-                profitsAllBaseLbl.Text = "All " + ConfigTool.CurrentBase.ToUpper() + ":";
-                profitsAllCoinLbl.Text = "All " + ConfigTool.CurrentCoin.ToUpper() + ":";
+                profitsAllBaseLbl.Text = MultiLanConfig.Instance.GetKeyValue("LABEL_ALL")  + " " + ConfigTool.CurrentBase.ToUpper() + ":";
+                profitsAllCoinLbl.Text = MultiLanConfig.Instance.GetKeyValue("LABEL_ALL")  + " " + ConfigTool.CurrentCoin.ToUpper() + ":";
 
                 pairChanged = true;
                 if (getUserInfoThread != null && getUserInfoThread.IsAlive)
@@ -644,8 +651,8 @@ namespace DragonExMiningSampleCSharp
                     {
                         isSet = false;
                         autoTradeChk.Checked = false;
-                        MessageBox.Show("Mine price should between min ask and max bid.Please check and try again.",
-                            "Incorrect parameters", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MINE_PRICE_INCORRECT"),
+                            MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
                         return;
                     }
                 }
@@ -658,9 +665,9 @@ namespace DragonExMiningSampleCSharp
                     {
                         isSet = false;
                         autoTradeChk.Checked = false;
-                        MessageBox.Show("Mine Amount and Price should over 1 usdt.Please check and try again."
-                            + Environment.NewLine + "To ensure trading successfully, the price is base on minimum ask price.",
-                            "Incorrect parameters", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MINE_AMOUNT_INCORRECT")
+                            + Environment.NewLine + MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MINE_AMOUNT_ENSURE"),
+                            MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS") , MessageBoxButtons.OK, MessageBoxIcon.Stop);
                         return;
                     }
                 }
@@ -671,8 +678,8 @@ namespace DragonExMiningSampleCSharp
                     {
                         isSet = false;
                         autoTradeChk.Checked = false;
-                        MessageBox.Show("Trade Interval is incorrect.Please check and try again.",
-                            "Incorrect parameters", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_TRADE_INTERVAL"),
+                            MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS") , MessageBoxButtons.OK, MessageBoxIcon.Stop);
                         return;
                     }
                 }
@@ -748,8 +755,8 @@ namespace DragonExMiningSampleCSharp
             if(tradeSide != TradeSide.A_TO_B && tradeSide != TradeSide.B_TO_A)
             {
                 // If Not A=>B and B=>A
-                MessageBox.Show("Use without auto trade, the side should be A_To_B or B_To_A.", 
-                    "Check Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_TRADE_WITHOUT_AUTO_SIDE"),
+                    MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             tradeBtn.Enabled = false;
@@ -829,8 +836,10 @@ namespace DragonExMiningSampleCSharp
         {
             try
             {
-                var logMsg = "Start A=>B Trading with " + DateTime.Now.ToString("yyyyMMdd HHmmss") + Environment.NewLine
-                    + "A Sell:" + tradingEntity.Sell.ToString() + "  Amount:" + tradingEntity.Amount.ToString();
+                var logMsg = string.Format(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_START_A"),
+                    DateTime.Now.ToString("yyyyMMdd HHmmss") + Environment.NewLine, 
+                    tradingEntity.Sell.ToString(),
+                    tradingEntity.Amount.ToString());
                 LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                 this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                 //Start A Sell
@@ -843,8 +852,10 @@ namespace DragonExMiningSampleCSharp
                         tradingEntity.Amount * tradingEntity.Sell * (1 - ConfigTool.TradeFee), ConfigTool.Digits);
                     this.Invoke(new ResetUI(ResetCurrentUserInfos), new object[] { });
 
-                    logMsg = "A Sell Succeed" + Environment.NewLine
-                        + "B Buy:" + tradingEntity.Buy.ToString() + "  Amount:" + tradingEntity.Amount.ToString();
+                    logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_A_SELL_SUCCEED") + Environment.NewLine
+                        + string.Format(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_START_B") , 
+                        tradingEntity.Buy.ToString(), 
+                        tradingEntity.Amount.ToString());
                     LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                     this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                     //Start B Buy
@@ -859,14 +870,14 @@ namespace DragonExMiningSampleCSharp
                                 tradingEntity.Buy, tradingEntity.Amount);
                             if (te != null)
                             {
-                                logMsg = "B Buy failed.Retry " + tryCount.ToString() + " succeed";
+                                logMsg = string.Format(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_B_BUY_ERROR_TRY_SUCCEED") , tryCount.ToString());
                                 LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                                 this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                                 break;
                             }
                             else
                             {
-                                logMsg = "B Buy failed.Retry " + tryCount.ToString() + " failed.";
+                                logMsg = string.Format(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_B_BUY_ERROR_TRY_FAILED"), tryCount.ToString());
                                 LogTool.LogTradeInfo(logMsg, LogLevels.ERROR);
                                 this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                             }
@@ -876,7 +887,7 @@ namespace DragonExMiningSampleCSharp
 
                     if (te != null)
                     {
-                        logMsg = "B Buy Succeed";
+                        logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_B_BUY_SUCCEED");
                         LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                         this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
 
@@ -898,7 +909,7 @@ namespace DragonExMiningSampleCSharp
                                 aResult = dragonExApiForA.CheckOrderSucceed(qte.OrderId);
                                 if (aResult)
                                 {
-                                    logMsg = "Check A Sell Succeed";
+                                    logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_CHECK_A_SUCCEED");
                                     this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                                 }
                             }
@@ -907,7 +918,7 @@ namespace DragonExMiningSampleCSharp
                                 bResult = dragonExApiForB.CheckOrderSucceed(te.OrderId);
                                 if (bResult)
                                 {
-                                    logMsg = "Check B Buy Succeed";
+                                    logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_CHECK_B_SUCCEED");
                                     this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                                 }
                             }
@@ -926,14 +937,14 @@ namespace DragonExMiningSampleCSharp
                     }
                     else
                     {
-                        logMsg = "B Buy Failed." + Environment.NewLine + "Abort Trading";
+                        logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_B_BUY_FAILED");
                         LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                         this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
                     }
                 }
                 else
                 {
-                    logMsg = "A Sell Failed." + Environment.NewLine + "Abort Trading";
+                    logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_A_SELL_FAILED");
                     LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                     this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
                 }
@@ -941,18 +952,18 @@ namespace DragonExMiningSampleCSharp
             catch (ThreadAbortException)
             {
                 //Do nothing when aborting thread
-                var logMsg = "Trading thread is immediately aborted.Trading failed.";
+                var logMsg = MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_TRADING_AB_TREAD_ABORTED");
                 LogTool.LogTradeInfo(logMsg, LogLevels.ERROR);
-                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { "Failed", true });
+                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
             }
             catch (Exception ex)
             {
-                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { "Failed:" + ex.Message, true });
                 //Error happened when getting
-                var logMsg = "Exception happened when Trading B to A.Details:" + Environment.NewLine
+                var logMsg = MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_TRADING_AB_EXCEPTION_HAPPEND") 
+                    + Environment.NewLine
                     + ex.Message + Environment.NewLine + ex.StackTrace;
-                Console.WriteLine(logMsg);
                 LogTool.LogTradeInfo(logMsg, LogLevels.ERROR);
+                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
             }
             finally
             {
@@ -967,8 +978,10 @@ namespace DragonExMiningSampleCSharp
         {
             try
             {
-                var logMsg = "Start B=>A Trading with " + DateTime.Now.ToString("yyyyMMdd HHmmss") + Environment.NewLine
-                    + "B Sell:" + tradingEntity.Sell.ToString() + "  Amount:" + tradingEntity.Amount.ToString();
+                var logMsg = string.Format(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_START_B") ,
+                    DateTime.Now.ToString("yyyyMMdd HHmmss") + Environment.NewLine,
+                    tradingEntity.Sell.ToString(),
+                    tradingEntity.Amount.ToString());
                 LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                 this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                 //Start B Sell
@@ -981,8 +994,10 @@ namespace DragonExMiningSampleCSharp
                         tradingEntity.Amount * tradingEntity.Sell * (1 - ConfigTool.TradeFee), ConfigTool.Digits);
                     this.Invoke(new ResetUI(ResetCurrentUserInfos), new object[] { });
 
-                    logMsg = "B Sell Succeed" + Environment.NewLine
-                        + "A Buy:" + tradingEntity.Buy.ToString() + "  Amount:" + tradingEntity.Amount.ToString();
+                    logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_B_SELL_SUCCEED") + Environment.NewLine
+                        + string.Format(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_START_A") ,
+                        tradingEntity.Buy.ToString(),
+                        tradingEntity.Amount.ToString());
                     LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                     this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                     //Start A Buy
@@ -997,14 +1012,16 @@ namespace DragonExMiningSampleCSharp
                                 tradingEntity.Buy, tradingEntity.Amount);
                             if (qte != null)
                             {
-                                logMsg = "A Buy failed.Retry " + tryCount.ToString() + " succeed";
+                                logMsg = string.Format(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_A_BUY_ERROR_TRY_SUCCEED"),
+                                    tryCount.ToString());
                                 LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                                 this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                                 break;
                             }
                             else
                             {
-                                logMsg = "A Buy failed.Retry " + tryCount.ToString() + " failed.";
+                                logMsg = string.Format(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_A_BUY_ERROR_TRY_FAILED") ,
+                                    tryCount.ToString());
                                 LogTool.LogTradeInfo(logMsg, LogLevels.ERROR);
                                 this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                             }
@@ -1014,7 +1031,7 @@ namespace DragonExMiningSampleCSharp
 
                     if (qte != null)
                     {
-                        logMsg = "A Buy Succeed";
+                        logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_A_BUY_SUCCEED");
                         LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                         this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
 
@@ -1035,7 +1052,7 @@ namespace DragonExMiningSampleCSharp
                                 bResult = dragonExApiForB.CheckOrderSucceed(te.OrderId);
                                 if (bResult)
                                 {
-                                    logMsg = "Check B Sell Succeed";
+                                    logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_CHECK_B_SUCCEED");
                                     this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                                 }
                             }
@@ -1044,7 +1061,7 @@ namespace DragonExMiningSampleCSharp
                                 aResult = dragonExApiForA.CheckOrderSucceed(qte.OrderId);
                                 if (aResult)
                                 {
-                                    logMsg = "Check A Buy Succeed";
+                                    logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_CHECK_A_SUCCEED");
                                     this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                                 }
                             }
@@ -1061,14 +1078,14 @@ namespace DragonExMiningSampleCSharp
                     }
                     else
                     {
-                        logMsg = "A Buy Failed." + Environment.NewLine + "Abort Trading";
+                        logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_A_BUY_FAILED");
                         LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                         this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
                     }
                 }
                 else
                 {
-                    logMsg = "B Sell Failed." + Environment.NewLine + "Abort Trading";
+                    logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_B_SELL_FAILED");
                     LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                     this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
                 }
@@ -1076,18 +1093,19 @@ namespace DragonExMiningSampleCSharp
             catch (ThreadAbortException)
             {
                 //Do nothing when aborting thread
-                var logMsg = "Trading thread is immediately aborted.Trading failed.";
+                var logMsg = MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_TRADING_BA_TREAD_ABORTED");
                 LogTool.LogTradeInfo(logMsg, LogLevels.ERROR);
-                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { "Failed", true });
+                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
             }
             catch (Exception ex)
             {
-                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { "Failed:" + ex.Message, true });
                 //Error happened when getting
-                var logMsg = "Exception happened when Trading A to B.Details:" + Environment.NewLine
+                var logMsg = MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_TRADING_BA_EXCEPTION_HAPPEND") 
+                    + Environment.NewLine
                     + ex.Message + Environment.NewLine + ex.StackTrace;
                 Console.WriteLine(logMsg);
                 LogTool.LogTradeInfo(logMsg, LogLevels.ERROR);
+                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
             }
             finally
             {

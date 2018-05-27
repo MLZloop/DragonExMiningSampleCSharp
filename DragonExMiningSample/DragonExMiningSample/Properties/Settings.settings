@@ -23,5 +23,8 @@
     <Setting Name="DragonEx_SecretB" Type="System.String" Scope="User">
       <Value Profile="(Default)">***</Value>
     </Setting>
+    <Setting Name="MultiLanguage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">English</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

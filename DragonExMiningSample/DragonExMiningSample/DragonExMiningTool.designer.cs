@@ -125,6 +125,7 @@
             this.bBidLbl.Name = "bBidLbl";
             this.bBidLbl.Size = new System.Drawing.Size(29, 12);
             this.bBidLbl.TabIndex = 15;
+            this.bBidLbl.Tag = "ML_WINFORM_LABEL_BID";
             this.bBidLbl.Text = "BID:";
             // 
             // aAskLbl
@@ -134,6 +135,7 @@
             this.aAskLbl.Name = "aAskLbl";
             this.aAskLbl.Size = new System.Drawing.Size(29, 12);
             this.aAskLbl.TabIndex = 14;
+            this.aAskLbl.Tag = "ML_WINFORM_LABEL_ASK";
             this.aAskLbl.Text = "ASK:";
             // 
             // AskGrid
@@ -184,6 +186,7 @@
             this.updateUserInfoBtn.Name = "updateUserInfoBtn";
             this.updateUserInfoBtn.Size = new System.Drawing.Size(126, 47);
             this.updateUserInfoBtn.TabIndex = 48;
+            this.updateUserInfoBtn.Tag = "ML_WINFORM_BTN_UPDATE";
             this.updateUserInfoBtn.Text = "UPDATE";
             this.updateUserInfoBtn.UseVisualStyleBackColor = true;
             this.updateUserInfoBtn.Click += new System.EventHandler(this.updateUserInfoBtn_Click);
@@ -195,6 +198,7 @@
             this.setBaseBtn.Name = "setBaseBtn";
             this.setBaseBtn.Size = new System.Drawing.Size(126, 46);
             this.setBaseBtn.TabIndex = 41;
+            this.setBaseBtn.Tag = "ML_WINFORM_BTN_RESET";
             this.setBaseBtn.Text = "RESET";
             this.setBaseBtn.UseVisualStyleBackColor = true;
             this.setBaseBtn.Click += new System.EventHandler(this.setBaseBtn_Click);
@@ -215,6 +219,7 @@
             this.profitsForCoinLbl.Name = "profitsForCoinLbl";
             this.profitsForCoinLbl.Size = new System.Drawing.Size(53, 12);
             this.profitsForCoinLbl.TabIndex = 46;
+            this.profitsForCoinLbl.Tag = "ML_WINFORM_LABEL_PROFITS_SUB";
             this.profitsForCoinLbl.Text = "Profits:";
             // 
             // profitsBaseLbl
@@ -233,6 +238,7 @@
             this.profitsForBaseLbl.Name = "profitsForBaseLbl";
             this.profitsForBaseLbl.Size = new System.Drawing.Size(53, 12);
             this.profitsForBaseLbl.TabIndex = 44;
+            this.profitsForBaseLbl.Tag = "ML_WINFORM_LABEL_PROFITS_SUB";
             this.profitsForBaseLbl.Text = "Profits:";
             // 
             // currentCoinLbl
@@ -251,6 +257,7 @@
             this.profitsCoinCurrentLbl.Name = "profitsCoinCurrentLbl";
             this.profitsCoinCurrentLbl.Size = new System.Drawing.Size(53, 12);
             this.profitsCoinCurrentLbl.TabIndex = 42;
+            this.profitsCoinCurrentLbl.Tag = "ML_WINFORM_LABEL_CURRENT";
             this.profitsCoinCurrentLbl.Text = "Current:";
             // 
             // baseCoinLbl
@@ -296,6 +303,7 @@
             this.profitsBaseCurrentLbl.Name = "profitsBaseCurrentLbl";
             this.profitsBaseCurrentLbl.Size = new System.Drawing.Size(53, 12);
             this.profitsBaseCurrentLbl.TabIndex = 36;
+            this.profitsBaseCurrentLbl.Tag = "ML_WINFORM_LABEL_CURRENT";
             this.profitsBaseCurrentLbl.Text = "Current:";
             // 
             // profitsAllBaseLbl
@@ -315,6 +323,7 @@
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(94, 21);
             this.label38.TabIndex = 34;
+            this.label38.Tag = "ML_WINFORM_LABEL_PROFITS";
             this.label38.Text = "Profits";
             // 
             // panel4
@@ -348,6 +357,7 @@
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(53, 12);
             this.label29.TabIndex = 39;
+            this.label29.Tag = "ML_WINFORM_LABEL_UPDATED";
             this.label29.Text = "Updated:";
             // 
             // bCoinLbl
@@ -394,6 +404,7 @@
             this.userInfoBLbl.Name = "userInfoBLbl";
             this.userInfoBLbl.Size = new System.Drawing.Size(118, 21);
             this.userInfoBLbl.TabIndex = 34;
+            this.userInfoBLbl.Tag = "ML_WINFORM_LABEL_B_ACCOUNT";
             this.userInfoBLbl.Text = "B Account";
             // 
             // label24
@@ -404,6 +415,7 @@
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(118, 21);
             this.label24.TabIndex = 43;
+            this.label24.Tag = "ML_WINFORM_LABEL_USER_INFO";
             this.label24.Text = "User Info";
             // 
             // panel3
@@ -437,6 +449,7 @@
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(53, 12);
             this.label27.TabIndex = 39;
+            this.label27.Tag = "ML_WINFORM_LABEL_UPDATED";
             this.label27.Text = "Updated:";
             // 
             // aCoinLbl
@@ -483,6 +496,7 @@
             this.userInfoALbl.Name = "userInfoALbl";
             this.userInfoALbl.Size = new System.Drawing.Size(118, 21);
             this.userInfoALbl.TabIndex = 34;
+            this.userInfoALbl.Tag = "ML_WINFORM_LABEL_A_ACCOUNT";
             this.userInfoALbl.Text = "A Account";
             // 
             // label1
@@ -493,6 +507,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(142, 21);
             this.label1.TabIndex = 47;
+            this.label1.Tag = "ML_WINFORM_LABEL_MARKET_INFO";
             this.label1.Text = "Market Info";
             // 
             // panel1
@@ -530,6 +545,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 12);
             this.label2.TabIndex = 55;
+            this.label2.Tag = "ML_WINFORM_LABEL_TRADE_METHOD";
             this.label2.Text = "Trade Method:";
             // 
             // aBBFSideRb
@@ -539,6 +555,7 @@
             this.aBBFSideRb.Name = "aBBFSideRb";
             this.aBBFSideRb.Size = new System.Drawing.Size(107, 16);
             this.aBBFSideRb.TabIndex = 54;
+            this.aBBFSideRb.Tag = "ML_WINFORM_RD_A_TO_B_B_FIRST";
             this.aBBFSideRb.Text = "A <=> B(First)";
             this.aBBFSideRb.UseVisualStyleBackColor = true;
             this.aBBFSideRb.CheckedChanged += new System.EventHandler(this.aBBFSideRb_CheckedChanged);
@@ -552,6 +569,7 @@
             this.aBAFSideRb.Size = new System.Drawing.Size(107, 16);
             this.aBAFSideRb.TabIndex = 53;
             this.aBAFSideRb.TabStop = true;
+            this.aBAFSideRb.Tag = "ML_WINFORM_RD_A_TO_B_A_FIRST";
             this.aBAFSideRb.Text = "A(First) <=> B";
             this.aBAFSideRb.UseVisualStyleBackColor = true;
             this.aBAFSideRb.CheckedChanged += new System.EventHandler(this.aBAFSideRb_CheckedChanged);
@@ -563,6 +581,7 @@
             this.bToASideRb.Name = "bToASideRb";
             this.bToASideRb.Size = new System.Drawing.Size(59, 16);
             this.bToASideRb.TabIndex = 52;
+            this.bToASideRb.Tag = "ML_WINFORM_RD_B_TO_A";
             this.bToASideRb.Text = "B => A";
             this.bToASideRb.UseVisualStyleBackColor = true;
             this.bToASideRb.CheckedChanged += new System.EventHandler(this.bToASideRb_CheckedChanged);
@@ -574,6 +593,7 @@
             this.aToBSideRb.Name = "aToBSideRb";
             this.aToBSideRb.Size = new System.Drawing.Size(59, 16);
             this.aToBSideRb.TabIndex = 51;
+            this.aToBSideRb.Tag = "ML_WINFORM_RD_A_TO_B";
             this.aToBSideRb.Text = "A => B";
             this.aToBSideRb.UseVisualStyleBackColor = true;
             this.aToBSideRb.CheckedChanged += new System.EventHandler(this.aToBSideRb_CheckedChanged);
@@ -585,6 +605,7 @@
             this.logLbl.Name = "logLbl";
             this.logLbl.Size = new System.Drawing.Size(29, 12);
             this.logLbl.TabIndex = 50;
+            this.logLbl.Tag = "ML_WINFORM_LABEL_LOG";
             this.logLbl.Text = "Log:";
             // 
             // tradeBtn
@@ -594,6 +615,7 @@
             this.tradeBtn.Name = "tradeBtn";
             this.tradeBtn.Size = new System.Drawing.Size(126, 107);
             this.tradeBtn.TabIndex = 49;
+            this.tradeBtn.Tag = "ML_WINFORM_BTN_TRADE";
             this.tradeBtn.Text = "TRADE";
             this.tradeBtn.UseVisualStyleBackColor = true;
             this.tradeBtn.Click += new System.EventHandler(this.tradeBtn_Click);
@@ -605,6 +627,7 @@
             this.mineAmountUnlimitedChk.Name = "mineAmountUnlimitedChk";
             this.mineAmountUnlimitedChk.Size = new System.Drawing.Size(108, 16);
             this.mineAmountUnlimitedChk.TabIndex = 12;
+            this.mineAmountUnlimitedChk.Tag = "ML_WINFORM_CHK_UNLIMITED_MAX";
             this.mineAmountUnlimitedChk.Text = "Unlimited(Max)";
             this.mineAmountUnlimitedChk.UseVisualStyleBackColor = true;
             this.mineAmountUnlimitedChk.CheckedChanged += new System.EventHandler(this.mineAmountUnlimitedChk_CheckedChanged);
@@ -645,6 +668,7 @@
             this.mineAmountLbl.Name = "mineAmountLbl";
             this.mineAmountLbl.Size = new System.Drawing.Size(89, 12);
             this.mineAmountLbl.TabIndex = 10;
+            this.mineAmountLbl.Tag = "ML_WINFORM_LABEL_MINE_AMOUNT";
             this.mineAmountLbl.Text = "Mining Amount:";
             // 
             // tradeIntervalUnlimitedChk
@@ -654,6 +678,7 @@
             this.tradeIntervalUnlimitedChk.Name = "tradeIntervalUnlimitedChk";
             this.tradeIntervalUnlimitedChk.Size = new System.Drawing.Size(108, 16);
             this.tradeIntervalUnlimitedChk.TabIndex = 9;
+            this.tradeIntervalUnlimitedChk.Tag = "ML_WINFORM_CHK_UNLIMITED_MIN";
             this.tradeIntervalUnlimitedChk.Text = "Unlimited(Min)";
             this.tradeIntervalUnlimitedChk.UseVisualStyleBackColor = true;
             this.tradeIntervalUnlimitedChk.CheckedChanged += new System.EventHandler(this.tradeIntervalUnlimitedChk_CheckedChanged);
@@ -688,6 +713,7 @@
             this.tradeIntervalLbl.Name = "tradeIntervalLbl";
             this.tradeIntervalLbl.Size = new System.Drawing.Size(113, 12);
             this.tradeIntervalLbl.TabIndex = 7;
+            this.tradeIntervalLbl.Tag = "ML_WINFORM_LABEL_TRADE_INTERVAL";
             this.tradeIntervalLbl.Text = "Trade Interval(s):";
             // 
             // autoGenerateChk
@@ -697,6 +723,7 @@
             this.autoGenerateChk.Name = "autoGenerateChk";
             this.autoGenerateChk.Size = new System.Drawing.Size(102, 16);
             this.autoGenerateChk.TabIndex = 6;
+            this.autoGenerateChk.Tag = "ML_WINFORM_CHK_AUTO_GENERATE";
             this.autoGenerateChk.Text = "Auto Generate";
             this.autoGenerateChk.UseVisualStyleBackColor = true;
             this.autoGenerateChk.CheckedChanged += new System.EventHandler(this.autoGenerateChk_CheckedChanged);
@@ -737,6 +764,7 @@
             this.minePriceLbl.Name = "minePriceLbl";
             this.minePriceLbl.Size = new System.Drawing.Size(83, 12);
             this.minePriceLbl.TabIndex = 4;
+            this.minePriceLbl.Tag = "ML_WINFORM_LABEL_MINE_PRICE";
             this.minePriceLbl.Text = "Mining Price:";
             // 
             // logTxt
@@ -755,6 +783,7 @@
             this.autoTradeChk.Name = "autoTradeChk";
             this.autoTradeChk.Size = new System.Drawing.Size(84, 16);
             this.autoTradeChk.TabIndex = 2;
+            this.autoTradeChk.Tag = "ML_WINFORM_CHK_AUTO_TRADE";
             this.autoTradeChk.Text = "Auto Trade";
             this.autoTradeChk.UseVisualStyleBackColor = true;
             this.autoTradeChk.CheckedChanged += new System.EventHandler(this.autoTradeChk_CheckedChanged);
@@ -766,6 +795,7 @@
             this.pairLbl.Name = "pairLbl";
             this.pairLbl.Size = new System.Drawing.Size(83, 12);
             this.pairLbl.TabIndex = 1;
+            this.pairLbl.Tag = "ML_WINFORM_LABEL_CURRENT_PAIR";
             this.pairLbl.Text = "Current Pair:";
             // 
             // pairCmb
@@ -796,6 +826,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DragonExMiningTool";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Tag = "ML_WINFORM_FORM_MINE_TOOL";
             this.Text = "DragonEx Mining Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DragonExMiningTool_FormClosing);
             this.Load += new System.EventHandler(this.DragonExMiningTool_Load);
