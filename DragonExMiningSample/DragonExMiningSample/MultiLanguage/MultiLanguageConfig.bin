@@ -53,6 +53,10 @@ TITLE_INCORECT_PARAMETERS=Incorrect parameters
 INFO_TRADING_AB_ENDED=Trading A=>B is ended.No Coin or Base is available.
 INFO_TRADING_BA_ENDED=Trading B=>A is ended.No Coin or Base is available.
 INFO_TRADING_UNDER_MINIMUM=Trade is ended.Trade amount and price is under minimum.
+INFO_TRADING_AB_CANCEL_A_SUCCEED=Cancel A order succeed.
+INFO_TRADING_AB_CANCEL_A_FAILED=Cancel A order failed.
+INFO_TRADING_BA_CANCEL_B_SUCCEED=Cancel B order succeed.
+INFO_TRADING_BA_CANCEL_B_FAILED=Cancel B order failed.
 ERROR_MSG_GETTING_USER_INFO=Exception happened when getting User Infos.Details:
 ERROR_MSG_GETTING_TICKER=Exception happened when getting Ticker.Details:
 ERROR_MSG_MINE_PRICE_INCORRECT=Mine price should between min ask and max bid.Please check and try again.
@@ -119,6 +123,10 @@ TITLE_INCORECT_PARAMETERS=参数不正确
 INFO_TRADING_AB_ENDED=从A到B交易结束。没有可以交易的币或者基准币。
 INFO_TRADING_BA_ENDED=从B到A交易结束。没有可以交易的币或者基准币。
 INFO_TRADING_UNDER_MINIMUM=交易结束。交易数量和价格小于最小交易数量价格。
+INFO_TRADING_AB_CANCEL_A_SUCCEED=取消A账户卖出订单成功。
+INFO_TRADING_AB_CANCEL_A_FAILED=取消A账户卖出订单失败。可能已经成交。
+INFO_TRADING_BA_CANCEL_B_SUCCEED=取消B账户卖出订单成功。
+INFO_TRADING_BA_CANCEL_B_FAILED=取消B账户卖出订单失败。可能已经成交。
 ERROR_MSG_GETTING_USER_INFO=取得用户信息时例外发生。详细信息：
 ERROR_MSG_GETTING_TICKER=取得秒级信息时发生例外。详细信息：
 ERROR_MSG_MINE_PRICE_INCORRECT=交易价格必须在最大买价和最小卖价之间。请确认并重试。

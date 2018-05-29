@@ -114,6 +114,11 @@ namespace DragonExMiningSampleCSharp
         /// Whether pair is changed
         /// </summary>
         private bool pairChanged = true;
+        
+        /// <summary>
+        /// Whether is trading
+        /// </summary>
+        private bool isTrading = false;
 
         /// <summary>
         /// Reset trade depth
@@ -144,7 +149,11 @@ namespace DragonExMiningSampleCSharp
         {
             while (true)
             {
-                GetUserInfo();
+                if (!isTrading)
+                {
+                    // Only execute when not trading
+                    GetUserInfo();
+                }
                 Thread.Sleep(ConfigTool.UserInfoGetInterval);
             }
         }
@@ -836,6 +845,7 @@ namespace DragonExMiningSampleCSharp
         {
             try
             {
+                isTrading = true;
                 var logMsg = string.Format(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_START_A"),
                     DateTime.Now.ToString("yyyyMMdd HHmmss") + Environment.NewLine, 
                     tradingEntity.Sell.ToString(),
@@ -859,14 +869,14 @@ namespace DragonExMiningSampleCSharp
                     LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                     this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                     //Start B Buy
-                    var te = dragonExApiForA.TradeBaseToCoin(ConfigTool.CurrentPair.Value, 
+                    var te = dragonExApiForB.TradeBaseToCoin(ConfigTool.CurrentPair.Value, 
                         tradingEntity.Buy, tradingEntity.Amount);
 
                     if (te == null)
                     {
-                        for (int tryCount = 0; tryCount < ConfigTool.TradeTryCountWhenSellSucceed; tryCount++)
+                        for (int tryCount = 1; tryCount <= ConfigTool.TradeTryCountWhenSellSucceed; tryCount++)
                         {
-                            te = dragonExApiForA.TradeBaseToCoin(ConfigTool.CurrentPair.Value, 
+                            te = dragonExApiForB.TradeBaseToCoin(ConfigTool.CurrentPair.Value, 
                                 tradingEntity.Buy, tradingEntity.Amount);
                             if (te != null)
                             {
@@ -882,6 +892,22 @@ namespace DragonExMiningSampleCSharp
                                 this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                             }
                             Thread.Sleep(200);
+                        }
+                    }
+
+                    if (te == null)
+                    {
+                        // Cancel the sell order if all buy try is failed.
+                        if (dragonExApiForA.CancelOrder(qte.OrderId))
+                        {
+                            logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_CANCEL_A_SUCCEED");
+                            LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                            this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                        }else
+                        {
+                            logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_CANCEL_A_FAILED");
+                            LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                            this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                         }
                     }
 
@@ -902,7 +928,7 @@ namespace DragonExMiningSampleCSharp
                         bool aResult, bResult;
                         aResult = false;
                         bResult = false;
-                        for (int tryCount = 0; tryCount < ConfigTool.ConfirmTryCountForTradeSucceed; tryCount++)
+                        for (int tryCount = 1; tryCount <= ConfigTool.ConfirmTryCountForTradeSucceed; tryCount++)
                         {
                             if (!aResult)
                             {
@@ -930,10 +956,11 @@ namespace DragonExMiningSampleCSharp
                             Thread.Sleep(2000);
                         }
 
+                        Thread.Sleep(2000);
+                        GetUserInfo();
+
                         logMsg = "";
                         this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
-                        
-                        GetUserInfo();
                     }
                     else
                     {
@@ -968,6 +995,7 @@ namespace DragonExMiningSampleCSharp
             finally
             {
                 lastTradeTime = DateTime.Now.Ticks;
+                isTrading = false;
             }
         }
 
@@ -978,6 +1006,7 @@ namespace DragonExMiningSampleCSharp
         {
             try
             {
+                isTrading = true;
                 var logMsg = string.Format(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_START_B") ,
                     DateTime.Now.ToString("yyyyMMdd HHmmss") + Environment.NewLine,
                     tradingEntity.Sell.ToString(),
@@ -1006,7 +1035,7 @@ namespace DragonExMiningSampleCSharp
 
                     if (qte == null)
                     {
-                        for (int tryCount = 0; tryCount < ConfigTool.TradeTryCountWhenSellSucceed; tryCount++)
+                        for (int tryCount = 1; tryCount <= ConfigTool.TradeTryCountWhenSellSucceed; tryCount++)
                         {
                             qte = dragonExApiForA.TradeBaseToCoin(ConfigTool.CurrentPair.Value, 
                                 tradingEntity.Buy, tradingEntity.Amount);
@@ -1029,6 +1058,23 @@ namespace DragonExMiningSampleCSharp
                         }
                     }
 
+                    if (qte == null)
+                    {
+                        // Cancel the sell order if all buy try is failed.
+                        if (dragonExApiForB.CancelOrder(te.OrderId))
+                        {
+                            logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_CANCEL_B_SUCCEED");
+                            LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                            this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                        }
+                        else
+                        {
+                            logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_CANCEL_B_FAILED");
+                            LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                            this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                        }
+                    }
+
                     if (qte != null)
                     {
                         logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_A_BUY_SUCCEED");
@@ -1044,7 +1090,7 @@ namespace DragonExMiningSampleCSharp
                         bool aResult, bResult;
                         aResult = false;
                         bResult = false;
-                        for (int tryCount = 0; tryCount < ConfigTool.ConfirmTryCountForTradeSucceed; tryCount++)
+                        for (int tryCount = 1; tryCount <= ConfigTool.ConfirmTryCountForTradeSucceed; tryCount++)
                         {
                             Thread.Sleep(2000);
                             if (!bResult)
@@ -1071,10 +1117,11 @@ namespace DragonExMiningSampleCSharp
                                 break;
                             }
                         }
+                        Thread.Sleep(2000);
+                        GetUserInfo();
+
                         logMsg = "";
                         this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
-
-                        GetUserInfo();
                     }
                     else
                     {
@@ -1110,6 +1157,7 @@ namespace DragonExMiningSampleCSharp
             finally
             {
                 lastTradeTime = DateTime.Now.Ticks;
+                isTrading = false;
             }
         }
     }

@@ -42,7 +42,7 @@ namespace DragonExMiningSampleCSharp.Apis.Config
         /// <summary>
         /// User info auto get interval
         /// </summary>
-        public static int UserInfoGetInterval = 12000;
+        public static int UserInfoGetInterval = 20000;
 
         /// <summary>
         /// Trade Pair Dictionary

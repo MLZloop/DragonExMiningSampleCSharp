@@ -161,6 +161,36 @@ namespace DragonExMiningSampleCSharp.Apis.DragonEx
         }
 
         /// <summary>
+        /// Cancel order
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public bool CancelOrder(string orderId)
+        {
+            try
+            {
+                XElement data = privateApiInstance.CancelOrder(ConfigTool.CurrentPair.Value, orderId);
+                var id = data.Element("data").Element("order_id");
+                if (id != null && !string.IsNullOrEmpty(id.Value))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                // If any error happened when Trading, out error log
+                var logMsg = "Exception happened when cancel trading in dragonex.Exception:" + Environment.NewLine
+                    + ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine;
+                LogTool.LogTradeInfo(logMsg, LogLevels.ERROR);
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Trade
         /// </summary>
         /// <param name="symbolId">Symbol id</param>
