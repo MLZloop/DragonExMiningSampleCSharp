@@ -68,35 +68,55 @@
             this.userInfoALbl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.aBBFSideRb = new System.Windows.Forms.RadioButton();
-            this.aBAFSideRb = new System.Windows.Forms.RadioButton();
-            this.bToASideRb = new System.Windows.Forms.RadioButton();
-            this.aToBSideRb = new System.Windows.Forms.RadioButton();
-            this.logLbl = new System.Windows.Forms.Label();
-            this.tradeBtn = new System.Windows.Forms.Button();
-            this.mineAmountUnlimitedChk = new System.Windows.Forms.CheckBox();
-            this.mineAmountNud = new System.Windows.Forms.NumericUpDown();
-            this.mineAmountLbl = new System.Windows.Forms.Label();
-            this.tradeIntervalUnlimitedChk = new System.Windows.Forms.CheckBox();
-            this.tradeIntervalNud = new System.Windows.Forms.NumericUpDown();
-            this.tradeIntervalLbl = new System.Windows.Forms.Label();
-            this.autoGenerateChk = new System.Windows.Forms.CheckBox();
-            this.minePriceNud = new System.Windows.Forms.NumericUpDown();
-            this.minePriceLbl = new System.Windows.Forms.Label();
-            this.logTxt = new System.Windows.Forms.RichTextBox();
-            this.autoTradeChk = new System.Windows.Forms.CheckBox();
+            this.maxMineAmountPanel = new System.Windows.Forms.Panel();
+            this.maxMineAmountLbl = new System.Windows.Forms.Label();
+            this.maxMineAmountNud = new System.Windows.Forms.NumericUpDown();
+            this.maxMineAmountUnlimitedChk = new System.Windows.Forms.CheckBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.pairLbl = new System.Windows.Forms.Label();
             this.pairCmb = new System.Windows.Forms.ComboBox();
+            this.autoTradeChk = new System.Windows.Forms.CheckBox();
+            this.minePricePanel = new System.Windows.Forms.Panel();
+            this.minePriceLbl = new System.Windows.Forms.Label();
+            this.minePriceNud = new System.Windows.Forms.NumericUpDown();
+            this.autoGenerateChk = new System.Windows.Forms.CheckBox();
+            this.tradeIntervalPanel = new System.Windows.Forms.Panel();
+            this.tradeIntervalLbl = new System.Windows.Forms.Label();
+            this.tradeIntervalNud = new System.Windows.Forms.NumericUpDown();
+            this.tradeIntervalUnlimitedChk = new System.Windows.Forms.CheckBox();
+            this.mineAmountPanel = new System.Windows.Forms.Panel();
+            this.mineAmountToUnlimitedChk = new System.Windows.Forms.CheckBox();
+            this.mineAmountToNud = new System.Windows.Forms.NumericUpDown();
+            this.randomMineAmountChk = new System.Windows.Forms.CheckBox();
+            this.mineAmountLbl = new System.Windows.Forms.Label();
+            this.mineAmountNud = new System.Windows.Forms.NumericUpDown();
+            this.mineAmountUnlimitedChk = new System.Windows.Forms.CheckBox();
+            this.tradeMethodPanel = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.aToBSideRb = new System.Windows.Forms.RadioButton();
+            this.aBBFSideRb = new System.Windows.Forms.RadioButton();
+            this.bToASideRb = new System.Windows.Forms.RadioButton();
+            this.aBAFSideRb = new System.Windows.Forms.RadioButton();
+            this.logLbl = new System.Windows.Forms.Label();
+            this.tradeBtn = new System.Windows.Forms.Button();
+            this.logTxt = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.BidGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AskGrid)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mineAmountNud)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tradeIntervalNud)).BeginInit();
+            this.maxMineAmountPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxMineAmountNud)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.minePricePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minePriceNud)).BeginInit();
+            this.tradeIntervalPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tradeIntervalNud)).BeginInit();
+            this.mineAmountPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mineAmountToNud)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mineAmountNud)).BeginInit();
+            this.tradeMethodPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // BidGrid
@@ -513,220 +533,144 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.aBBFSideRb);
-            this.panel1.Controls.Add(this.aBAFSideRb);
-            this.panel1.Controls.Add(this.bToASideRb);
-            this.panel1.Controls.Add(this.aToBSideRb);
+            this.panel1.Controls.Add(this.maxMineAmountPanel);
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.minePricePanel);
+            this.panel1.Controls.Add(this.tradeIntervalPanel);
+            this.panel1.Controls.Add(this.mineAmountPanel);
+            this.panel1.Controls.Add(this.tradeMethodPanel);
             this.panel1.Controls.Add(this.logLbl);
             this.panel1.Controls.Add(this.tradeBtn);
-            this.panel1.Controls.Add(this.mineAmountUnlimitedChk);
-            this.panel1.Controls.Add(this.mineAmountNud);
-            this.panel1.Controls.Add(this.mineAmountLbl);
-            this.panel1.Controls.Add(this.tradeIntervalUnlimitedChk);
-            this.panel1.Controls.Add(this.tradeIntervalNud);
-            this.panel1.Controls.Add(this.tradeIntervalLbl);
-            this.panel1.Controls.Add(this.autoGenerateChk);
-            this.panel1.Controls.Add(this.minePriceNud);
-            this.panel1.Controls.Add(this.minePriceLbl);
             this.panel1.Controls.Add(this.logTxt);
-            this.panel1.Controls.Add(this.autoTradeChk);
-            this.panel1.Controls.Add(this.pairLbl);
-            this.panel1.Controls.Add(this.pairCmb);
             this.panel1.Location = new System.Drawing.Point(13, 350);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(569, 313);
             this.panel1.TabIndex = 48;
             // 
-            // label2
+            // maxMineAmountPanel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 120);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 12);
-            this.label2.TabIndex = 55;
-            this.label2.Tag = "ML_WINFORM_LABEL_TRADE_METHOD";
-            this.label2.Text = "Trade Method:";
+            this.maxMineAmountPanel.Controls.Add(this.maxMineAmountLbl);
+            this.maxMineAmountPanel.Controls.Add(this.maxMineAmountNud);
+            this.maxMineAmountPanel.Controls.Add(this.maxMineAmountUnlimitedChk);
+            this.maxMineAmountPanel.Location = new System.Drawing.Point(1, 125);
+            this.maxMineAmountPanel.Name = "maxMineAmountPanel";
+            this.maxMineAmountPanel.Size = new System.Drawing.Size(350, 27);
+            this.maxMineAmountPanel.TabIndex = 58;
             // 
-            // aBBFSideRb
+            // maxMineAmountLbl
             // 
-            this.aBBFSideRb.AutoSize = true;
-            this.aBBFSideRb.Location = new System.Drawing.Point(201, 139);
-            this.aBBFSideRb.Name = "aBBFSideRb";
-            this.aBBFSideRb.Size = new System.Drawing.Size(107, 16);
-            this.aBBFSideRb.TabIndex = 54;
-            this.aBBFSideRb.Tag = "ML_WINFORM_RD_A_TO_B_B_FIRST";
-            this.aBBFSideRb.Text = "A <=> B(First)";
-            this.aBBFSideRb.UseVisualStyleBackColor = true;
-            this.aBBFSideRb.CheckedChanged += new System.EventHandler(this.aBBFSideRb_CheckedChanged);
+            this.maxMineAmountLbl.AutoSize = true;
+            this.maxMineAmountLbl.Location = new System.Drawing.Point(4, 6);
+            this.maxMineAmountLbl.Name = "maxMineAmountLbl";
+            this.maxMineAmountLbl.Size = new System.Drawing.Size(101, 12);
+            this.maxMineAmountLbl.TabIndex = 10;
+            this.maxMineAmountLbl.Tag = "ML_WINFORM_LABEL_MAX_MINE_AMOUNT";
+            this.maxMineAmountLbl.Text = "Max Mine Amount:";
             // 
-            // aBAFSideRb
+            // maxMineAmountNud
             // 
-            this.aBAFSideRb.AutoSize = true;
-            this.aBAFSideRb.Checked = true;
-            this.aBAFSideRb.Location = new System.Drawing.Point(201, 118);
-            this.aBAFSideRb.Name = "aBAFSideRb";
-            this.aBAFSideRb.Size = new System.Drawing.Size(107, 16);
-            this.aBAFSideRb.TabIndex = 53;
-            this.aBAFSideRb.TabStop = true;
-            this.aBAFSideRb.Tag = "ML_WINFORM_RD_A_TO_B_A_FIRST";
-            this.aBAFSideRb.Text = "A(First) <=> B";
-            this.aBAFSideRb.UseVisualStyleBackColor = true;
-            this.aBAFSideRb.CheckedChanged += new System.EventHandler(this.aBAFSideRb_CheckedChanged);
-            // 
-            // bToASideRb
-            // 
-            this.bToASideRb.AutoSize = true;
-            this.bToASideRb.Location = new System.Drawing.Point(124, 139);
-            this.bToASideRb.Name = "bToASideRb";
-            this.bToASideRb.Size = new System.Drawing.Size(59, 16);
-            this.bToASideRb.TabIndex = 52;
-            this.bToASideRb.Tag = "ML_WINFORM_RD_B_TO_A";
-            this.bToASideRb.Text = "B => A";
-            this.bToASideRb.UseVisualStyleBackColor = true;
-            this.bToASideRb.CheckedChanged += new System.EventHandler(this.bToASideRb_CheckedChanged);
-            // 
-            // aToBSideRb
-            // 
-            this.aToBSideRb.AutoSize = true;
-            this.aToBSideRb.Location = new System.Drawing.Point(124, 118);
-            this.aToBSideRb.Name = "aToBSideRb";
-            this.aToBSideRb.Size = new System.Drawing.Size(59, 16);
-            this.aToBSideRb.TabIndex = 51;
-            this.aToBSideRb.Tag = "ML_WINFORM_RD_A_TO_B";
-            this.aToBSideRb.Text = "A => B";
-            this.aToBSideRb.UseVisualStyleBackColor = true;
-            this.aToBSideRb.CheckedChanged += new System.EventHandler(this.aToBSideRb_CheckedChanged);
-            // 
-            // logLbl
-            // 
-            this.logLbl.AutoSize = true;
-            this.logLbl.Location = new System.Drawing.Point(5, 143);
-            this.logLbl.Name = "logLbl";
-            this.logLbl.Size = new System.Drawing.Size(29, 12);
-            this.logLbl.TabIndex = 50;
-            this.logLbl.Tag = "ML_WINFORM_LABEL_LOG";
-            this.logLbl.Text = "Log:";
-            // 
-            // tradeBtn
-            // 
-            this.tradeBtn.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tradeBtn.Location = new System.Drawing.Point(425, 5);
-            this.tradeBtn.Name = "tradeBtn";
-            this.tradeBtn.Size = new System.Drawing.Size(126, 107);
-            this.tradeBtn.TabIndex = 49;
-            this.tradeBtn.Tag = "ML_WINFORM_BTN_TRADE";
-            this.tradeBtn.Text = "TRADE";
-            this.tradeBtn.UseVisualStyleBackColor = true;
-            this.tradeBtn.Click += new System.EventHandler(this.tradeBtn_Click);
-            // 
-            // mineAmountUnlimitedChk
-            // 
-            this.mineAmountUnlimitedChk.AutoSize = true;
-            this.mineAmountUnlimitedChk.Location = new System.Drawing.Point(246, 63);
-            this.mineAmountUnlimitedChk.Name = "mineAmountUnlimitedChk";
-            this.mineAmountUnlimitedChk.Size = new System.Drawing.Size(108, 16);
-            this.mineAmountUnlimitedChk.TabIndex = 12;
-            this.mineAmountUnlimitedChk.Tag = "ML_WINFORM_CHK_UNLIMITED_MAX";
-            this.mineAmountUnlimitedChk.Text = "Unlimited(Max)";
-            this.mineAmountUnlimitedChk.UseVisualStyleBackColor = true;
-            this.mineAmountUnlimitedChk.CheckedChanged += new System.EventHandler(this.mineAmountUnlimitedChk_CheckedChanged);
-            // 
-            // mineAmountNud
-            // 
-            this.mineAmountNud.DecimalPlaces = 10;
-            this.mineAmountNud.Increment = new decimal(new int[] {
+            this.maxMineAmountNud.DecimalPlaces = 10;
+            this.maxMineAmountNud.Enabled = false;
+            this.maxMineAmountNud.Increment = new decimal(new int[] {
             1,
             0,
             0,
             655360});
-            this.mineAmountNud.Location = new System.Drawing.Point(124, 61);
-            this.mineAmountNud.Maximum = new decimal(new int[] {
+            this.maxMineAmountNud.Location = new System.Drawing.Point(123, 3);
+            this.maxMineAmountNud.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
-            this.mineAmountNud.Minimum = new decimal(new int[] {
+            this.maxMineAmountNud.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             655360});
-            this.mineAmountNud.Name = "mineAmountNud";
-            this.mineAmountNud.Size = new System.Drawing.Size(110, 21);
-            this.mineAmountNud.TabIndex = 11;
-            this.mineAmountNud.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            655360});
-            this.mineAmountNud.ValueChanged += new System.EventHandler(this.mineAmountNud_ValueChanged);
-            // 
-            // mineAmountLbl
-            // 
-            this.mineAmountLbl.AutoSize = true;
-            this.mineAmountLbl.Location = new System.Drawing.Point(5, 64);
-            this.mineAmountLbl.Name = "mineAmountLbl";
-            this.mineAmountLbl.Size = new System.Drawing.Size(89, 12);
-            this.mineAmountLbl.TabIndex = 10;
-            this.mineAmountLbl.Tag = "ML_WINFORM_LABEL_MINE_AMOUNT";
-            this.mineAmountLbl.Text = "Mining Amount:";
-            // 
-            // tradeIntervalUnlimitedChk
-            // 
-            this.tradeIntervalUnlimitedChk.AutoSize = true;
-            this.tradeIntervalUnlimitedChk.Location = new System.Drawing.Point(246, 94);
-            this.tradeIntervalUnlimitedChk.Name = "tradeIntervalUnlimitedChk";
-            this.tradeIntervalUnlimitedChk.Size = new System.Drawing.Size(108, 16);
-            this.tradeIntervalUnlimitedChk.TabIndex = 9;
-            this.tradeIntervalUnlimitedChk.Tag = "ML_WINFORM_CHK_UNLIMITED_MIN";
-            this.tradeIntervalUnlimitedChk.Text = "Unlimited(Min)";
-            this.tradeIntervalUnlimitedChk.UseVisualStyleBackColor = true;
-            this.tradeIntervalUnlimitedChk.CheckedChanged += new System.EventHandler(this.tradeIntervalUnlimitedChk_CheckedChanged);
-            // 
-            // tradeIntervalNud
-            // 
-            this.tradeIntervalNud.Location = new System.Drawing.Point(124, 91);
-            this.tradeIntervalNud.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.tradeIntervalNud.Minimum = new decimal(new int[] {
+            this.maxMineAmountNud.Name = "maxMineAmountNud";
+            this.maxMineAmountNud.Size = new System.Drawing.Size(110, 21);
+            this.maxMineAmountNud.TabIndex = 11;
+            this.maxMineAmountNud.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.tradeIntervalNud.Name = "tradeIntervalNud";
-            this.tradeIntervalNud.Size = new System.Drawing.Size(110, 21);
-            this.tradeIntervalNud.TabIndex = 8;
-            this.tradeIntervalNud.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.tradeIntervalNud.ValueChanged += new System.EventHandler(this.tradeIntervalNud_ValueChanged);
+            this.maxMineAmountNud.ValueChanged += new System.EventHandler(this.maxMineAmountNud_ValueChanged);
             // 
-            // tradeIntervalLbl
+            // maxMineAmountUnlimitedChk
             // 
-            this.tradeIntervalLbl.AutoSize = true;
-            this.tradeIntervalLbl.Location = new System.Drawing.Point(5, 95);
-            this.tradeIntervalLbl.Name = "tradeIntervalLbl";
-            this.tradeIntervalLbl.Size = new System.Drawing.Size(113, 12);
-            this.tradeIntervalLbl.TabIndex = 7;
-            this.tradeIntervalLbl.Tag = "ML_WINFORM_LABEL_TRADE_INTERVAL";
-            this.tradeIntervalLbl.Text = "Trade Interval(s):";
+            this.maxMineAmountUnlimitedChk.AutoSize = true;
+            this.maxMineAmountUnlimitedChk.Checked = true;
+            this.maxMineAmountUnlimitedChk.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.maxMineAmountUnlimitedChk.Location = new System.Drawing.Point(245, 5);
+            this.maxMineAmountUnlimitedChk.Name = "maxMineAmountUnlimitedChk";
+            this.maxMineAmountUnlimitedChk.Size = new System.Drawing.Size(108, 16);
+            this.maxMineAmountUnlimitedChk.TabIndex = 12;
+            this.maxMineAmountUnlimitedChk.Tag = "ML_WINFORM_CHK_UNLIMITED_MAX";
+            this.maxMineAmountUnlimitedChk.Text = "Unlimited(Max)";
+            this.maxMineAmountUnlimitedChk.UseVisualStyleBackColor = true;
+            this.maxMineAmountUnlimitedChk.CheckedChanged += new System.EventHandler(this.maxMineAmountUnlimitedChk_CheckedChanged);
             // 
-            // autoGenerateChk
+            // panel2
             // 
-            this.autoGenerateChk.AutoSize = true;
-            this.autoGenerateChk.Location = new System.Drawing.Point(246, 34);
-            this.autoGenerateChk.Name = "autoGenerateChk";
-            this.autoGenerateChk.Size = new System.Drawing.Size(102, 16);
-            this.autoGenerateChk.TabIndex = 6;
-            this.autoGenerateChk.Tag = "ML_WINFORM_CHK_AUTO_GENERATE";
-            this.autoGenerateChk.Text = "Auto Generate";
-            this.autoGenerateChk.UseVisualStyleBackColor = true;
-            this.autoGenerateChk.CheckedChanged += new System.EventHandler(this.autoGenerateChk_CheckedChanged);
+            this.panel2.Controls.Add(this.pairLbl);
+            this.panel2.Controls.Add(this.pairCmb);
+            this.panel2.Controls.Add(this.autoTradeChk);
+            this.panel2.Location = new System.Drawing.Point(1, 2);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(350, 27);
+            this.panel2.TabIndex = 60;
+            // 
+            // pairLbl
+            // 
+            this.pairLbl.AutoSize = true;
+            this.pairLbl.Location = new System.Drawing.Point(4, 6);
+            this.pairLbl.Name = "pairLbl";
+            this.pairLbl.Size = new System.Drawing.Size(83, 12);
+            this.pairLbl.TabIndex = 1;
+            this.pairLbl.Tag = "ML_WINFORM_LABEL_CURRENT_PAIR";
+            this.pairLbl.Text = "Current Pair:";
+            // 
+            // pairCmb
+            // 
+            this.pairCmb.FormattingEnabled = true;
+            this.pairCmb.Location = new System.Drawing.Point(123, 3);
+            this.pairCmb.Name = "pairCmb";
+            this.pairCmb.Size = new System.Drawing.Size(110, 20);
+            this.pairCmb.TabIndex = 0;
+            this.pairCmb.SelectedIndexChanged += new System.EventHandler(this.pairCmb_SelectedIndexChanged);
+            // 
+            // autoTradeChk
+            // 
+            this.autoTradeChk.AutoSize = true;
+            this.autoTradeChk.Location = new System.Drawing.Point(245, 6);
+            this.autoTradeChk.Name = "autoTradeChk";
+            this.autoTradeChk.Size = new System.Drawing.Size(84, 16);
+            this.autoTradeChk.TabIndex = 2;
+            this.autoTradeChk.Tag = "ML_WINFORM_CHK_AUTO_TRADE";
+            this.autoTradeChk.Text = "Auto Trade";
+            this.autoTradeChk.UseVisualStyleBackColor = true;
+            this.autoTradeChk.CheckedChanged += new System.EventHandler(this.autoTradeChk_CheckedChanged);
+            // 
+            // minePricePanel
+            // 
+            this.minePricePanel.Controls.Add(this.minePriceLbl);
+            this.minePricePanel.Controls.Add(this.minePriceNud);
+            this.minePricePanel.Controls.Add(this.autoGenerateChk);
+            this.minePricePanel.Location = new System.Drawing.Point(1, 32);
+            this.minePricePanel.Name = "minePricePanel";
+            this.minePricePanel.Size = new System.Drawing.Size(350, 27);
+            this.minePricePanel.TabIndex = 59;
+            // 
+            // minePriceLbl
+            // 
+            this.minePriceLbl.AutoSize = true;
+            this.minePriceLbl.Location = new System.Drawing.Point(4, 7);
+            this.minePriceLbl.Name = "minePriceLbl";
+            this.minePriceLbl.Size = new System.Drawing.Size(71, 12);
+            this.minePriceLbl.TabIndex = 4;
+            this.minePriceLbl.Tag = "ML_WINFORM_LABEL_MINE_PRICE";
+            this.minePriceLbl.Text = "Mine Price:";
             // 
             // minePriceNud
             // 
@@ -736,7 +680,7 @@
             0,
             0,
             655360});
-            this.minePriceNud.Location = new System.Drawing.Point(124, 32);
+            this.minePriceNud.Location = new System.Drawing.Point(123, 4);
             this.minePriceNud.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -757,55 +701,294 @@
             655360});
             this.minePriceNud.ValueChanged += new System.EventHandler(this.minePriceNud_ValueChanged);
             // 
-            // minePriceLbl
+            // autoGenerateChk
             // 
-            this.minePriceLbl.AutoSize = true;
-            this.minePriceLbl.Location = new System.Drawing.Point(5, 35);
-            this.minePriceLbl.Name = "minePriceLbl";
-            this.minePriceLbl.Size = new System.Drawing.Size(83, 12);
-            this.minePriceLbl.TabIndex = 4;
-            this.minePriceLbl.Tag = "ML_WINFORM_LABEL_MINE_PRICE";
-            this.minePriceLbl.Text = "Mining Price:";
+            this.autoGenerateChk.AutoSize = true;
+            this.autoGenerateChk.Location = new System.Drawing.Point(245, 6);
+            this.autoGenerateChk.Name = "autoGenerateChk";
+            this.autoGenerateChk.Size = new System.Drawing.Size(102, 16);
+            this.autoGenerateChk.TabIndex = 6;
+            this.autoGenerateChk.Tag = "ML_WINFORM_CHK_AUTO_GENERATE";
+            this.autoGenerateChk.Text = "Auto Generate";
+            this.autoGenerateChk.UseVisualStyleBackColor = true;
+            this.autoGenerateChk.CheckedChanged += new System.EventHandler(this.autoGenerateChk_CheckedChanged);
+            // 
+            // tradeIntervalPanel
+            // 
+            this.tradeIntervalPanel.Controls.Add(this.tradeIntervalLbl);
+            this.tradeIntervalPanel.Controls.Add(this.tradeIntervalNud);
+            this.tradeIntervalPanel.Controls.Add(this.tradeIntervalUnlimitedChk);
+            this.tradeIntervalPanel.Location = new System.Drawing.Point(1, 155);
+            this.tradeIntervalPanel.Name = "tradeIntervalPanel";
+            this.tradeIntervalPanel.Size = new System.Drawing.Size(350, 27);
+            this.tradeIntervalPanel.TabIndex = 58;
+            // 
+            // tradeIntervalLbl
+            // 
+            this.tradeIntervalLbl.AutoSize = true;
+            this.tradeIntervalLbl.Location = new System.Drawing.Point(4, 7);
+            this.tradeIntervalLbl.Name = "tradeIntervalLbl";
+            this.tradeIntervalLbl.Size = new System.Drawing.Size(113, 12);
+            this.tradeIntervalLbl.TabIndex = 7;
+            this.tradeIntervalLbl.Tag = "ML_WINFORM_LABEL_TRADE_INTERVAL";
+            this.tradeIntervalLbl.Text = "Trade Interval(s):";
+            // 
+            // tradeIntervalNud
+            // 
+            this.tradeIntervalNud.Location = new System.Drawing.Point(123, 3);
+            this.tradeIntervalNud.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.tradeIntervalNud.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tradeIntervalNud.Name = "tradeIntervalNud";
+            this.tradeIntervalNud.Size = new System.Drawing.Size(110, 21);
+            this.tradeIntervalNud.TabIndex = 8;
+            this.tradeIntervalNud.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.tradeIntervalNud.ValueChanged += new System.EventHandler(this.tradeIntervalNud_ValueChanged);
+            // 
+            // tradeIntervalUnlimitedChk
+            // 
+            this.tradeIntervalUnlimitedChk.AutoSize = true;
+            this.tradeIntervalUnlimitedChk.Location = new System.Drawing.Point(245, 6);
+            this.tradeIntervalUnlimitedChk.Name = "tradeIntervalUnlimitedChk";
+            this.tradeIntervalUnlimitedChk.Size = new System.Drawing.Size(108, 16);
+            this.tradeIntervalUnlimitedChk.TabIndex = 9;
+            this.tradeIntervalUnlimitedChk.Tag = "ML_WINFORM_CHK_UNLIMITED_MIN";
+            this.tradeIntervalUnlimitedChk.Text = "Unlimited(Min)";
+            this.tradeIntervalUnlimitedChk.UseVisualStyleBackColor = true;
+            this.tradeIntervalUnlimitedChk.CheckedChanged += new System.EventHandler(this.tradeIntervalUnlimitedChk_CheckedChanged);
+            // 
+            // mineAmountPanel
+            // 
+            this.mineAmountPanel.Controls.Add(this.mineAmountToUnlimitedChk);
+            this.mineAmountPanel.Controls.Add(this.mineAmountToNud);
+            this.mineAmountPanel.Controls.Add(this.randomMineAmountChk);
+            this.mineAmountPanel.Controls.Add(this.mineAmountLbl);
+            this.mineAmountPanel.Controls.Add(this.mineAmountNud);
+            this.mineAmountPanel.Controls.Add(this.mineAmountUnlimitedChk);
+            this.mineAmountPanel.Location = new System.Drawing.Point(1, 62);
+            this.mineAmountPanel.Name = "mineAmountPanel";
+            this.mineAmountPanel.Size = new System.Drawing.Size(350, 60);
+            this.mineAmountPanel.TabIndex = 57;
+            // 
+            // mineAmountToUnlimitedChk
+            // 
+            this.mineAmountToUnlimitedChk.AutoSize = true;
+            this.mineAmountToUnlimitedChk.Enabled = false;
+            this.mineAmountToUnlimitedChk.Location = new System.Drawing.Point(245, 34);
+            this.mineAmountToUnlimitedChk.Name = "mineAmountToUnlimitedChk";
+            this.mineAmountToUnlimitedChk.Size = new System.Drawing.Size(108, 16);
+            this.mineAmountToUnlimitedChk.TabIndex = 15;
+            this.mineAmountToUnlimitedChk.Tag = "ML_WINFORM_CHK_UNLIMITED_MAX";
+            this.mineAmountToUnlimitedChk.Text = "Unlimited(Max)";
+            this.mineAmountToUnlimitedChk.UseVisualStyleBackColor = true;
+            this.mineAmountToUnlimitedChk.CheckedChanged += new System.EventHandler(this.mineAmountToUnlimitedChk_CheckedChanged);
+            // 
+            // mineAmountToNud
+            // 
+            this.mineAmountToNud.DecimalPlaces = 10;
+            this.mineAmountToNud.Enabled = false;
+            this.mineAmountToNud.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            655360});
+            this.mineAmountToNud.Location = new System.Drawing.Point(123, 31);
+            this.mineAmountToNud.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.mineAmountToNud.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            655360});
+            this.mineAmountToNud.Name = "mineAmountToNud";
+            this.mineAmountToNud.Size = new System.Drawing.Size(110, 21);
+            this.mineAmountToNud.TabIndex = 14;
+            this.mineAmountToNud.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.mineAmountToNud.ValueChanged += new System.EventHandler(this.mineAmountToNud_ValueChanged);
+            // 
+            // randomMineAmountChk
+            // 
+            this.randomMineAmountChk.AutoSize = true;
+            this.randomMineAmountChk.Location = new System.Drawing.Point(6, 34);
+            this.randomMineAmountChk.Name = "randomMineAmountChk";
+            this.randomMineAmountChk.Size = new System.Drawing.Size(84, 16);
+            this.randomMineAmountChk.TabIndex = 13;
+            this.randomMineAmountChk.Tag = "ML_WINFORM_LABEL_AMOUNT_RANDOM";
+            this.randomMineAmountChk.Text = "Random To:";
+            this.randomMineAmountChk.UseVisualStyleBackColor = true;
+            this.randomMineAmountChk.CheckedChanged += new System.EventHandler(this.randomMineAmountChk_CheckedChanged);
+            // 
+            // mineAmountLbl
+            // 
+            this.mineAmountLbl.AutoSize = true;
+            this.mineAmountLbl.Location = new System.Drawing.Point(4, 6);
+            this.mineAmountLbl.Name = "mineAmountLbl";
+            this.mineAmountLbl.Size = new System.Drawing.Size(77, 12);
+            this.mineAmountLbl.TabIndex = 10;
+            this.mineAmountLbl.Tag = "ML_WINFORM_LABEL_MINE_AMOUNT";
+            this.mineAmountLbl.Text = "Mine Amount:";
+            // 
+            // mineAmountNud
+            // 
+            this.mineAmountNud.DecimalPlaces = 10;
+            this.mineAmountNud.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            655360});
+            this.mineAmountNud.Location = new System.Drawing.Point(123, 3);
+            this.mineAmountNud.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.mineAmountNud.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            655360});
+            this.mineAmountNud.Name = "mineAmountNud";
+            this.mineAmountNud.Size = new System.Drawing.Size(110, 21);
+            this.mineAmountNud.TabIndex = 11;
+            this.mineAmountNud.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            655360});
+            this.mineAmountNud.ValueChanged += new System.EventHandler(this.mineAmountNud_ValueChanged);
+            // 
+            // mineAmountUnlimitedChk
+            // 
+            this.mineAmountUnlimitedChk.AutoSize = true;
+            this.mineAmountUnlimitedChk.Location = new System.Drawing.Point(245, 5);
+            this.mineAmountUnlimitedChk.Name = "mineAmountUnlimitedChk";
+            this.mineAmountUnlimitedChk.Size = new System.Drawing.Size(108, 16);
+            this.mineAmountUnlimitedChk.TabIndex = 12;
+            this.mineAmountUnlimitedChk.Tag = "ML_WINFORM_CHK_UNLIMITED_MAX";
+            this.mineAmountUnlimitedChk.Text = "Unlimited(Max)";
+            this.mineAmountUnlimitedChk.UseVisualStyleBackColor = true;
+            this.mineAmountUnlimitedChk.CheckedChanged += new System.EventHandler(this.mineAmountUnlimitedChk_CheckedChanged);
+            // 
+            // tradeMethodPanel
+            // 
+            this.tradeMethodPanel.Controls.Add(this.label2);
+            this.tradeMethodPanel.Controls.Add(this.aToBSideRb);
+            this.tradeMethodPanel.Controls.Add(this.aBBFSideRb);
+            this.tradeMethodPanel.Controls.Add(this.bToASideRb);
+            this.tradeMethodPanel.Controls.Add(this.aBAFSideRb);
+            this.tradeMethodPanel.Location = new System.Drawing.Point(1, 184);
+            this.tradeMethodPanel.Name = "tradeMethodPanel";
+            this.tradeMethodPanel.Size = new System.Drawing.Size(350, 52);
+            this.tradeMethodPanel.TabIndex = 56;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(83, 12);
+            this.label2.TabIndex = 55;
+            this.label2.Tag = "ML_WINFORM_LABEL_TRADE_METHOD";
+            this.label2.Text = "Trade Method:";
+            // 
+            // aToBSideRb
+            // 
+            this.aToBSideRb.AutoSize = true;
+            this.aToBSideRb.Location = new System.Drawing.Point(123, 7);
+            this.aToBSideRb.Name = "aToBSideRb";
+            this.aToBSideRb.Size = new System.Drawing.Size(59, 16);
+            this.aToBSideRb.TabIndex = 51;
+            this.aToBSideRb.Tag = "ML_WINFORM_RD_A_TO_B";
+            this.aToBSideRb.Text = "A => B";
+            this.aToBSideRb.UseVisualStyleBackColor = true;
+            this.aToBSideRb.CheckedChanged += new System.EventHandler(this.aToBSideRb_CheckedChanged);
+            // 
+            // aBBFSideRb
+            // 
+            this.aBBFSideRb.AutoSize = true;
+            this.aBBFSideRb.Location = new System.Drawing.Point(200, 28);
+            this.aBBFSideRb.Name = "aBBFSideRb";
+            this.aBBFSideRb.Size = new System.Drawing.Size(107, 16);
+            this.aBBFSideRb.TabIndex = 54;
+            this.aBBFSideRb.Tag = "ML_WINFORM_RD_A_TO_B_B_FIRST";
+            this.aBBFSideRb.Text = "A <=> B(First)";
+            this.aBBFSideRb.UseVisualStyleBackColor = true;
+            this.aBBFSideRb.CheckedChanged += new System.EventHandler(this.aBBFSideRb_CheckedChanged);
+            // 
+            // bToASideRb
+            // 
+            this.bToASideRb.AutoSize = true;
+            this.bToASideRb.Location = new System.Drawing.Point(123, 28);
+            this.bToASideRb.Name = "bToASideRb";
+            this.bToASideRb.Size = new System.Drawing.Size(59, 16);
+            this.bToASideRb.TabIndex = 52;
+            this.bToASideRb.Tag = "ML_WINFORM_RD_B_TO_A";
+            this.bToASideRb.Text = "B => A";
+            this.bToASideRb.UseVisualStyleBackColor = true;
+            this.bToASideRb.CheckedChanged += new System.EventHandler(this.bToASideRb_CheckedChanged);
+            // 
+            // aBAFSideRb
+            // 
+            this.aBAFSideRb.AutoSize = true;
+            this.aBAFSideRb.Checked = true;
+            this.aBAFSideRb.Location = new System.Drawing.Point(200, 7);
+            this.aBAFSideRb.Name = "aBAFSideRb";
+            this.aBAFSideRb.Size = new System.Drawing.Size(107, 16);
+            this.aBAFSideRb.TabIndex = 53;
+            this.aBAFSideRb.TabStop = true;
+            this.aBAFSideRb.Tag = "ML_WINFORM_RD_A_TO_B_A_FIRST";
+            this.aBAFSideRb.Text = "A(First) <=> B";
+            this.aBAFSideRb.UseVisualStyleBackColor = true;
+            this.aBAFSideRb.CheckedChanged += new System.EventHandler(this.aBAFSideRb_CheckedChanged);
+            // 
+            // logLbl
+            // 
+            this.logLbl.AutoSize = true;
+            this.logLbl.Location = new System.Drawing.Point(355, 9);
+            this.logLbl.Name = "logLbl";
+            this.logLbl.Size = new System.Drawing.Size(29, 12);
+            this.logLbl.TabIndex = 50;
+            this.logLbl.Tag = "ML_WINFORM_LABEL_LOG";
+            this.logLbl.Text = "Log:";
+            // 
+            // tradeBtn
+            // 
+            this.tradeBtn.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tradeBtn.Location = new System.Drawing.Point(7, 242);
+            this.tradeBtn.Name = "tradeBtn";
+            this.tradeBtn.Size = new System.Drawing.Size(341, 66);
+            this.tradeBtn.TabIndex = 49;
+            this.tradeBtn.Tag = "ML_WINFORM_BTN_TRADE";
+            this.tradeBtn.Text = "TRADE";
+            this.tradeBtn.UseVisualStyleBackColor = true;
+            this.tradeBtn.Click += new System.EventHandler(this.tradeBtn_Click);
             // 
             // logTxt
             // 
             this.logTxt.ForeColor = System.Drawing.Color.Red;
-            this.logTxt.Location = new System.Drawing.Point(3, 159);
+            this.logTxt.Location = new System.Drawing.Point(357, 35);
             this.logTxt.Name = "logTxt";
-            this.logTxt.Size = new System.Drawing.Size(553, 149);
+            this.logTxt.Size = new System.Drawing.Size(199, 268);
             this.logTxt.TabIndex = 3;
             this.logTxt.Text = "Test";
-            // 
-            // autoTradeChk
-            // 
-            this.autoTradeChk.AutoSize = true;
-            this.autoTradeChk.Location = new System.Drawing.Point(246, 8);
-            this.autoTradeChk.Name = "autoTradeChk";
-            this.autoTradeChk.Size = new System.Drawing.Size(84, 16);
-            this.autoTradeChk.TabIndex = 2;
-            this.autoTradeChk.Tag = "ML_WINFORM_CHK_AUTO_TRADE";
-            this.autoTradeChk.Text = "Auto Trade";
-            this.autoTradeChk.UseVisualStyleBackColor = true;
-            this.autoTradeChk.CheckedChanged += new System.EventHandler(this.autoTradeChk_CheckedChanged);
-            // 
-            // pairLbl
-            // 
-            this.pairLbl.AutoSize = true;
-            this.pairLbl.Location = new System.Drawing.Point(5, 8);
-            this.pairLbl.Name = "pairLbl";
-            this.pairLbl.Size = new System.Drawing.Size(83, 12);
-            this.pairLbl.TabIndex = 1;
-            this.pairLbl.Tag = "ML_WINFORM_LABEL_CURRENT_PAIR";
-            this.pairLbl.Text = "Current Pair:";
-            // 
-            // pairCmb
-            // 
-            this.pairCmb.FormattingEnabled = true;
-            this.pairCmb.Location = new System.Drawing.Point(124, 5);
-            this.pairCmb.Name = "pairCmb";
-            this.pairCmb.Size = new System.Drawing.Size(110, 20);
-            this.pairCmb.TabIndex = 0;
-            this.pairCmb.SelectedIndexChanged += new System.EventHandler(this.pairCmb_SelectedIndexChanged);
             // 
             // DragonExMiningTool
             // 
@@ -840,9 +1023,23 @@
             this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mineAmountNud)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tradeIntervalNud)).EndInit();
+            this.maxMineAmountPanel.ResumeLayout(false);
+            this.maxMineAmountPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxMineAmountNud)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.minePricePanel.ResumeLayout(false);
+            this.minePricePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minePriceNud)).EndInit();
+            this.tradeIntervalPanel.ResumeLayout(false);
+            this.tradeIntervalPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tradeIntervalNud)).EndInit();
+            this.mineAmountPanel.ResumeLayout(false);
+            this.mineAmountPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mineAmountToNud)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mineAmountNud)).EndInit();
+            this.tradeMethodPanel.ResumeLayout(false);
+            this.tradeMethodPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -909,5 +1106,17 @@
         private System.Windows.Forms.RadioButton aBBFSideRb;
         private System.Windows.Forms.RadioButton aBAFSideRb;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel mineAmountPanel;
+        private System.Windows.Forms.Panel tradeMethodPanel;
+        private System.Windows.Forms.Panel tradeIntervalPanel;
+        private System.Windows.Forms.Panel minePricePanel;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel maxMineAmountPanel;
+        private System.Windows.Forms.Label maxMineAmountLbl;
+        private System.Windows.Forms.NumericUpDown maxMineAmountNud;
+        private System.Windows.Forms.CheckBox maxMineAmountUnlimitedChk;
+        private System.Windows.Forms.CheckBox mineAmountToUnlimitedChk;
+        private System.Windows.Forms.NumericUpDown mineAmountToNud;
+        private System.Windows.Forms.CheckBox randomMineAmountChk;
     }
 }

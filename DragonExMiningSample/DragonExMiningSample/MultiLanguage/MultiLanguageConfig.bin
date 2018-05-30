@@ -22,6 +22,8 @@ ML_WINFORM_LABEL_MINE_PRICE=Mining Price:
 ML_WINFORM_LABEL_MINE_AMOUNT=Mining Amount:
 ML_WINFORM_LABEL_TRADE_INTERVAL=Trade Interval(s):
 ML_WINFORM_LABEL_TRADE_METHOD=Trade Method:
+ML_WINFORM_LABEL_MAX_MINE_AMOUNT=Max Mine Amount:
+ML_WINFORM_LABEL_AMOUNT_RANDOM=Random To:
 ML_WINFORM_RD_A_TO_B=A => B
 ML_WINFORM_RD_B_TO_A=B => A
 ML_WINFORM_RD_A_TO_B_A_FIRST=A(First) <=> B
@@ -52,7 +54,11 @@ LABEL_ALL=All
 TITLE_INCORECT_PARAMETERS=Incorrect parameters
 INFO_TRADING_AB_ENDED=Trading A=>B is ended.No Coin or Base is available.
 INFO_TRADING_BA_ENDED=Trading B=>A is ended.No Coin or Base is available.
+INFO_TRADING_AB_REACH_MAX_AMOUNT=Trading A=>B is ended.The amount is reached the max amount limit.
+INFO_TRADING_BA_REACH_MAX_AMOUNT=Trading B=>A is ended.The amount is reached the max amount limit.
 INFO_TRADING_UNDER_MINIMUM=Trade is ended.Trade amount and price is under minimum.
+INFO_TRADING_UNDER_MINIMUM_REVERT_SIDE=Trade amount and price is under minimum.Try to revert trade side.
+INFO_TRADING_REACH_MAX_LIMIT_REVERT_SIDE=Trade amount reached max amount limit.Try to revert trade side.
 INFO_TRADING_AB_CANCEL_A_SUCCEED=Cancel A order succeed.
 INFO_TRADING_AB_CANCEL_A_FAILED=Cancel A order failed.
 INFO_TRADING_BA_CANCEL_B_SUCCEED=Cancel B order succeed.
@@ -61,6 +67,10 @@ ERROR_MSG_GETTING_USER_INFO=Exception happened when getting User Infos.Details:
 ERROR_MSG_GETTING_TICKER=Exception happened when getting Ticker.Details:
 ERROR_MSG_MINE_PRICE_INCORRECT=Mine price should between min ask and max bid.Please check and try again.
 ERROR_MSG_MINE_AMOUNT_INCORRECT=Mine Amount and Price should over 1 usdt.Please check and try again.
+ERROR_MSG_MAX_MINE_AMOUNT_UNDER_MINIMUM=Max Mine Amount and Price should over 1 usdt.Please check and try again.
+ERROR_MSG_MAX_MINE_AMOUNT_UNDER_MINE_AMOUNT=Max Mine Amount should greater than or equal to Mine Amount.Please check and try again.
+ERROR_MSG_MAX_MINE_AMOUNT_UNDER_MINE_AMOUNT_TO=Max Mine Amount should greater than or equal to Mine Amount To.Please check and try again.
+ERROR_MSG_RANDOM_MINE_AMOUNT_TO_UNDER_FROM=Mine Amount To should greater than or equal to Mine Amount.Please check and try again.
 ERROR_MSG_MINE_AMOUNT_ENSURE=To ensure trading successfully, the price is base on minimum ask price.
 ERROR_MSG_TRADE_INTERVAL=Trade Interval is incorrect.Please check and try again.
 ERROR_MSG_TRADE_WITHOUT_AUTO_SIDE=Use without auto trade, the side should be A_To_B or B_To_A.
@@ -92,6 +102,8 @@ ML_WINFORM_LABEL_MINE_PRICE=交易价格：
 ML_WINFORM_LABEL_MINE_AMOUNT=每次交易数量：
 ML_WINFORM_LABEL_TRADE_INTERVAL=交易间隔(秒)：
 ML_WINFORM_LABEL_TRADE_METHOD=交易方式：
+ML_WINFORM_LABEL_MAX_MINE_AMOUNT=单边最大数量：
+ML_WINFORM_LABEL_AMOUNT_RANDOM=随机至最大：
 ML_WINFORM_RD_A_TO_B=A => B
 ML_WINFORM_RD_B_TO_A=B => A
 ML_WINFORM_RD_A_TO_B_A_FIRST=A(优先) <=> B
@@ -122,7 +134,11 @@ LABEL_ALL=全部
 TITLE_INCORECT_PARAMETERS=参数不正确
 INFO_TRADING_AB_ENDED=从A到B交易结束。没有可以交易的币或者基准币。
 INFO_TRADING_BA_ENDED=从B到A交易结束。没有可以交易的币或者基准币。
+INFO_TRADING_AB_REACH_MAX_AMOUNT=从A到B交易结束。已经到达最大交易数量。
+INFO_TRADING_BA_REACH_MAX_AMOUNT=从B到A交易结束。已经到达最大交易数量。
 INFO_TRADING_UNDER_MINIMUM=交易结束。交易数量和价格小于最小交易数量价格。
+INFO_TRADING_UNDER_MINIMUM_REVERT_SIDE=交易数量和价格小于最小交易数量价格。将尝试反向交易。
+INFO_TRADING_REACH_MAX_LIMIT_REVERT_SIDE=交易数量已经达到单边最大交易数量限制。将尝试反向交易。
 INFO_TRADING_AB_CANCEL_A_SUCCEED=取消A账户卖出订单成功。
 INFO_TRADING_AB_CANCEL_A_FAILED=取消A账户卖出订单失败。可能已经成交。
 INFO_TRADING_BA_CANCEL_B_SUCCEED=取消B账户卖出订单成功。
@@ -131,6 +147,10 @@ ERROR_MSG_GETTING_USER_INFO=取得用户信息时例外发生。详细信息：
 ERROR_MSG_GETTING_TICKER=取得秒级信息时发生例外。详细信息：
 ERROR_MSG_MINE_PRICE_INCORRECT=交易价格必须在最大买价和最小卖价之间。请确认并重试。
 ERROR_MSG_MINE_AMOUNT_INCORRECT=交易最终价格必须大于1USDT。请确认并重试。
+ERROR_MSG_MAX_MINE_AMOUNT_UNDER_MINIMUM=单边最大交易数量小于可交易最小数量（最终价格必须大于1USDT）。请确认并重试。
+ERROR_MSG_MAX_MINE_AMOUNT_UNDER_MINE_AMOUNT=单边最大交易数量必须大于或等于每次交易数量。请确认并重试。
+ERROR_MSG_MAX_MINE_AMOUNT_UNDER_MINE_AMOUNT_TO=单边最大交易数量必须大于或等于每次交易数量随机区间。请确认并重试。
+ERROR_MSG_RANDOM_MINE_AMOUNT_TO_UNDER_FROM=随机数量区间不正确。请确认并重试。
 ERROR_MSG_MINE_AMOUNT_ENSURE=为了确保交易成功，基准价格基于最小买价。
 ERROR_MSG_TRADE_INTERVAL=交易间隔设定不正确。请确认并重试。
 ERROR_MSG_TRADE_WITHOUT_AUTO_SIDE=手动交易时，交易方式必须为 [A到B] 或 [B到A]。

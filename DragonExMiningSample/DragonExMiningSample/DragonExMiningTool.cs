@@ -21,6 +21,11 @@ namespace DragonExMiningSampleCSharp
     public partial class DragonExMiningTool : Form
     {
         /// <summary>
+        /// Randome tool
+        /// </summary>
+        private Random randomTool = new Random(int.Parse(DateTime.Now.ToString("yyyyMMddHHmm").Substring(2)));
+
+        /// <summary>
         /// Api For A Account
         /// </summary>
         private DragonExApiImpl dragonExApiForA = new DragonExApiImpl(DragonExConstants.SECRET_KEY_A, DragonExConstants.ACCESS_KEY_A);
@@ -104,6 +109,51 @@ namespace DragonExMiningSampleCSharp
         /// Trade method
         /// </summary>
         private TradeMethod tradeMethod = TradeMethod.A_TO_B;
+
+        /// <summary>
+        /// Previous trade method
+        /// </summary>
+        private TradeMethod previousTradeMethod = TradeMethod.A_TO_B;
+
+        /// <summary>
+        /// Max Mine Amount
+        /// </summary>
+        private decimal maxMineAmount = 1;
+
+        /// <summary>
+        /// Previous max mine amount
+        /// </summary>
+        private decimal previousMaxMineAmount = 1;
+
+        /// <summary>
+        /// Whether max mine amount is unlimited
+        /// </summary>
+        private bool maxMineAmountUnlimited = true;
+
+        /// <summary>
+        /// Current side mine amount total
+        /// </summary>
+        private decimal currentSideMineAmountTotal = 0.0m;
+
+        /// <summary>
+        /// Whether random mine amount
+        /// </summary>
+        private bool isRandomMineAmount = false;
+
+        /// <summary>
+        /// Random mine amount to
+        /// </summary>
+        private decimal randomMineAmounTo = 1;
+
+        /// <summary>
+        /// Previous Random mine amount to
+        /// </summary>
+        private decimal previousRndomMineAmounTo = 1;
+
+        /// <summary>
+        /// Whether random mine amount to unlimited
+        /// </summary>
+        private bool randomMineAmountToUnlimited = false;
 
         /// <summary>
         /// Last trade time
@@ -296,37 +346,93 @@ namespace DragonExMiningSampleCSharp
         /// </summary>
         private void ExecTrading()
         {
+            if (previousTradeMethod != tradeMethod)
+            {
+                // If trade method changed.Reset current side total traded amount.
+                currentSideMineAmountTotal = 0.0m;
+            }
+            previousTradeMethod = tradeMethod;
+
             switch (tradeSide)
             {
                 case TradeSide.A_TO_B:
+                    tradeMethod = TradeMethod.A_TO_B;
                     // If not trading now
                     if (tradingThread == null || !tradingThread.IsAlive)
                     {
+                        decimal currentMineAmount = mineAmount;
                         // If mine amount is unlimited
                         if (mineAmountUnlimited)
                         {
                             var aMaxAmount = dragonExApiForA.UserAmounts.CoinAmount;
                             var bMaxAmount = dragonExApiForB.UserAmounts.BaseAmount / (minePrice * (1 + ConfigTool.TradeFee));
-                            mineAmount = Math.Min(aMaxAmount, bMaxAmount);
+                            currentMineAmount = Math.Min(aMaxAmount, bMaxAmount);
+                            if (!maxMineAmountUnlimited)
+                            {
+                                currentMineAmount = Math.Min(currentMineAmount, maxMineAmount);
+                            }
                         }
-                        if (mineAmount * minePrice > ConfigTool.MinimumTradeUsdtAmount)
+                        else if (isRandomMineAmount)
+                        {
+                            decimal minAmount = currentMineAmount;
+                            // If amount is random
+                            if (randomMineAmountToUnlimited)
+                            {
+                                decimal maxAmount = 0.0m;
+                                if (maxMineAmountUnlimited)
+                                {
+                                    var aMaxAmount = dragonExApiForA.UserAmounts.CoinAmount;
+                                    var bMaxAmount = dragonExApiForB.UserAmounts.BaseAmount / (minePrice * (1 + ConfigTool.TradeFee));
+                                    maxAmount = Math.Min(aMaxAmount, bMaxAmount);
+                                }
+                                else
+                                {
+                                    maxAmount = maxMineAmount - currentSideMineAmountTotal;
+                                }
+                                if (maxAmount > minAmount)
+                                {
+                                    decimal rdm = (decimal)randomTool.NextDouble();
+                                    currentMineAmount = CommonUtils.GetTruncateDecimal(minAmount + (maxAmount - currentMineAmount) * rdm, ConfigTool.Digits);
+                                }
+                                else
+                                {
+                                    currentMineAmount = minAmount;
+                                }
+                            }
+                            else
+                            {
+                                decimal maxAmount = randomMineAmounTo;
+                                decimal rdm = (decimal)randomTool.NextDouble();
+                                currentMineAmount = CommonUtils.GetTruncateDecimal(minAmount + (maxAmount - currentMineAmount) * rdm, ConfigTool.Digits);
+                            }
+                        }
+                        if (currentMineAmount * minePrice > ConfigTool.MinimumTradeUsdtAmount)
                         {
                             if (mineAmountUnlimited ||
-                                (mineAmount <= dragonExApiForA.UserAmounts.CoinAmount
-                                && mineAmount * minePrice * (1 + ConfigTool.TradeFee) <= dragonExApiForB.UserAmounts.BaseAmount))
+                                (currentMineAmount <= dragonExApiForA.UserAmounts.CoinAmount
+                                && currentMineAmount * minePrice * (1 + ConfigTool.TradeFee) <= dragonExApiForB.UserAmounts.BaseAmount))
                             {
-                                // Do trading
-                                long currentTS = DateTime.Now.Ticks;
-                                if (tradeIntervalUnlimited || currentTS - lastTradeTime >= tradeInterval * 10000000)
+                                if (maxMineAmountUnlimited ||
+                                    currentSideMineAmountTotal + currentMineAmount <= maxMineAmount)
                                 {
-                                    lastTradeTime = currentTS;
-                                    logTxt.Clear();
-                                    tradingEntity = new TradingEntity();
-                                    tradingEntity.Buy = minePrice;
-                                    tradingEntity.Sell = minePrice;
-                                    tradingEntity.Amount = mineAmount;
-                                    tradingThread = new Thread(ExecTradingAB);
-                                    tradingThread.Start();
+                                    // Do trading
+                                    long currentTS = DateTime.Now.Ticks;
+                                    if (tradeIntervalUnlimited || currentTS - lastTradeTime >= tradeInterval * 10000000)
+                                    {
+                                        lastTradeTime = currentTS;
+                                        logTxt.Clear();
+                                        tradingEntity = new TradingEntity();
+                                        tradingEntity.Buy = minePrice;
+                                        tradingEntity.Sell = minePrice;
+                                        tradingEntity.Amount = currentMineAmount;
+                                        tradingThread = new Thread(ExecTradingAB);
+                                        tradingThread.Start();
+                                    }
+                                }
+                                else
+                                {
+                                    logTxt.Text = "";
+                                    ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_REACH_MAX_AMOUNT"), true);
                                 }
                             }
                             else
@@ -346,34 +452,83 @@ namespace DragonExMiningSampleCSharp
                     }
                     break;
                 case TradeSide.B_TO_A:
+                    tradeMethod = TradeMethod.B_TO_A;
                     // If not trading now
                     if (tradingThread == null || !tradingThread.IsAlive)
                     {
+                        decimal currentMineAmount = mineAmount;
                         // If mine amount is unlimited
                         if (mineAmountUnlimited)
                         {
                             var aMaxAmount = dragonExApiForB.UserAmounts.CoinAmount;
                             var bMaxAmount = dragonExApiForA.UserAmounts.BaseAmount / (minePrice * (1 + ConfigTool.TradeFee));
-                            mineAmount = Math.Min(aMaxAmount, bMaxAmount);
+                            currentMineAmount = Math.Min(aMaxAmount, bMaxAmount);
+                            if (!maxMineAmountUnlimited)
+                            {
+                                currentMineAmount = Math.Min(currentMineAmount, maxMineAmount);
+                            }
                         }
-                        if (mineAmount * minePrice > ConfigTool.MinimumTradeUsdtAmount)
+                        else if (isRandomMineAmount)
+                        {
+                            decimal minAmount = currentMineAmount;
+                            // If amount is random
+                            if (randomMineAmountToUnlimited)
+                            {
+                                decimal maxAmount = 0.0m;
+                                if (maxMineAmountUnlimited)
+                                {
+                                    var aMaxAmount = dragonExApiForB.UserAmounts.CoinAmount;
+                                    var bMaxAmount = dragonExApiForA.UserAmounts.BaseAmount / (minePrice * (1 + ConfigTool.TradeFee));
+                                    maxAmount = Math.Min(aMaxAmount, bMaxAmount);
+                                }
+                                else
+                                {
+                                    maxAmount = maxMineAmount - currentSideMineAmountTotal;
+                                }
+                                if (maxAmount > minAmount)
+                                {
+                                    decimal rdm = (decimal)randomTool.NextDouble();
+                                    currentMineAmount = CommonUtils.GetTruncateDecimal(minAmount + (maxAmount - currentMineAmount) * rdm, ConfigTool.Digits);
+                                }
+                                else
+                                {
+                                    currentMineAmount = minAmount;
+                                }
+                            }
+                            else
+                            {
+                                decimal maxAmount = randomMineAmounTo;
+                                decimal rdm = (decimal)randomTool.NextDouble();
+                                currentMineAmount = CommonUtils.GetTruncateDecimal(minAmount + (maxAmount - currentMineAmount) * rdm, ConfigTool.Digits);
+                            }
+                        }
+                        if (currentMineAmount * minePrice > ConfigTool.MinimumTradeUsdtAmount)
                         {
                             if (mineAmountUnlimited ||
-                                (mineAmount <= dragonExApiForB.UserAmounts.CoinAmount
-                                && mineAmount * minePrice * (1 + ConfigTool.TradeFee) <= dragonExApiForA.UserAmounts.BaseAmount))
+                                (currentMineAmount <= dragonExApiForB.UserAmounts.CoinAmount
+                                && currentMineAmount * minePrice * (1 + ConfigTool.TradeFee) <= dragonExApiForA.UserAmounts.BaseAmount))
                             {
-                                // Do trading
-                                long currentTS = DateTime.Now.Ticks;
-                                if (tradeIntervalUnlimited || currentTS - lastTradeTime >= tradeInterval * 10000000)
+                                if (maxMineAmountUnlimited ||
+                                    currentSideMineAmountTotal + currentMineAmount <= maxMineAmount)
                                 {
-                                    lastTradeTime = currentTS;
-                                    logTxt.Clear();
-                                    tradingEntity = new TradingEntity();
-                                    tradingEntity.Buy = minePrice;
-                                    tradingEntity.Sell = minePrice;
-                                    tradingEntity.Amount = mineAmount;
-                                    tradingThread = new Thread(ExecTradingBA);
-                                    tradingThread.Start();
+                                    // Do trading
+                                    long currentTS = DateTime.Now.Ticks;
+                                    if (tradeIntervalUnlimited || currentTS - lastTradeTime >= tradeInterval * 10000000)
+                                    {
+                                        lastTradeTime = currentTS;
+                                        logTxt.Clear();
+                                        tradingEntity = new TradingEntity();
+                                        tradingEntity.Buy = minePrice;
+                                        tradingEntity.Sell = minePrice;
+                                        tradingEntity.Amount = currentMineAmount;
+                                        tradingThread = new Thread(ExecTradingBA);
+                                        tradingThread.Start();
+                                    }
+                                }
+                                else
+                                {
+                                    logTxt.Text = "";
+                                    ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_REACH_MAX_AMOUNT"), true);
                                 }
                             }
                             else
@@ -397,16 +552,25 @@ namespace DragonExMiningSampleCSharp
                     // If not trading now
                     if (tradingThread == null || !tradingThread.IsAlive)
                     {
+                        decimal currentMineAmount = mineAmount;
                         // If mine amount is unlimited
                         if (mineAmountUnlimited)
                         {
                             var aMaxAmount = dragonExApiForA.UserAmounts.CoinAmount;
                             var bMaxAmount = dragonExApiForB.UserAmounts.BaseAmount / (minePrice * (1 + ConfigTool.TradeFee));
                             var aToBMineAmount = Math.Min(aMaxAmount, bMaxAmount);
+                            if (!maxMineAmountUnlimited)
+                            {
+                                aToBMineAmount = Math.Min(aToBMineAmount, maxMineAmount);
+                            }
 
                             aMaxAmount = dragonExApiForB.UserAmounts.CoinAmount;
                             bMaxAmount = dragonExApiForA.UserAmounts.BaseAmount / (minePrice * (1 + ConfigTool.TradeFee));
                             var bToAMineAmount = Math.Min(aMaxAmount, bMaxAmount);
+                            if (!maxMineAmountUnlimited)
+                            {
+                                bToAMineAmount = Math.Min(bToAMineAmount, maxMineAmount);
+                            }
 
                             if (aToBMineAmount * minePrice <= ConfigTool.MinimumTradeUsdtAmount
                                 && bToAMineAmount * minePrice <= ConfigTool.MinimumTradeUsdtAmount)
@@ -419,42 +583,101 @@ namespace DragonExMiningSampleCSharp
                             switch (tradeMethod)
                             {
                                 case TradeMethod.A_TO_B:
-                                    mineAmount = aToBMineAmount;
+                                    currentMineAmount = aToBMineAmount;
                                     break;
                                 case TradeMethod.B_TO_A:
-                                    mineAmount = bToAMineAmount;
+                                    currentMineAmount = bToAMineAmount;
                                     break;
                             }
                         }
-                        if (mineAmount * minePrice > ConfigTool.MinimumTradeUsdtAmount)
+                        else if (isRandomMineAmount)
                         {
-                            if (mineAmountUnlimited ||
-                                (tradeMethod == TradeMethod.A_TO_B && mineAmount <= dragonExApiForA.UserAmounts.CoinAmount
-                                && mineAmount * minePrice * (1 + ConfigTool.TradeFee) <= dragonExApiForB.UserAmounts.BaseAmount) ||
-                                (tradeMethod == TradeMethod.B_TO_A && mineAmount <= dragonExApiForB.UserAmounts.CoinAmount
-                                && mineAmount * minePrice * (1 + ConfigTool.TradeFee) <= dragonExApiForA.UserAmounts.BaseAmount))
+                            decimal minAmount = currentMineAmount;
+                            // If amount is random
+                            if (randomMineAmountToUnlimited)
                             {
-                                // Do trading
-                                long currentTS = DateTime.Now.Ticks;
-                                if (tradeIntervalUnlimited || currentTS - lastTradeTime >= tradeInterval * 10000000)
+                                decimal maxAmount = 0.0m;
+                                if (maxMineAmountUnlimited)
                                 {
-                                    lastTradeTime = currentTS;
-                                    logTxt.Clear();
-                                    lastTradeTime = currentTS;
-                                    tradingEntity = new TradingEntity();
-                                    tradingEntity.Buy = minePrice;
-                                    tradingEntity.Sell = minePrice;
-                                    tradingEntity.Amount = mineAmount;
+                                    var aMaxAmount = dragonExApiForA.UserAmounts.CoinAmount;
+                                    var bMaxAmount = dragonExApiForB.UserAmounts.BaseAmount / (minePrice * (1 + ConfigTool.TradeFee));
+                                    var aToBMineAmount = Math.Min(aMaxAmount, bMaxAmount);
+
+                                    aMaxAmount = dragonExApiForB.UserAmounts.CoinAmount;
+                                    bMaxAmount = dragonExApiForA.UserAmounts.BaseAmount / (minePrice * (1 + ConfigTool.TradeFee));
+                                    var bToAMineAmount = Math.Min(aMaxAmount, bMaxAmount);
+
                                     switch (tradeMethod)
                                     {
                                         case TradeMethod.A_TO_B:
-                                            tradingThread = new Thread(ExecTradingAB);
+                                            maxAmount = aToBMineAmount;
                                             break;
                                         case TradeMethod.B_TO_A:
-                                            tradingThread = new Thread(ExecTradingBA);
+                                            maxAmount = bToAMineAmount;
                                             break;
                                     }
-                                    tradingThread.Start();
+                                }
+                                else
+                                {
+                                    maxAmount = maxMineAmount - currentSideMineAmountTotal;
+                                }
+                                if (maxAmount > minAmount)
+                                {
+                                    decimal rdm = (decimal)randomTool.NextDouble();
+                                    currentMineAmount = CommonUtils.GetTruncateDecimal(minAmount + (maxAmount - currentMineAmount) * rdm, ConfigTool.Digits);
+                                }
+                                else
+                                {
+                                    currentMineAmount = minAmount;
+                                }
+                            }
+                            else
+                            {
+                                decimal maxAmount = randomMineAmounTo;
+                                decimal rdm = (decimal)randomTool.NextDouble();
+                                currentMineAmount = CommonUtils.GetTruncateDecimal(minAmount + (maxAmount - currentMineAmount) * rdm, ConfigTool.Digits);
+                            }
+                        }
+                        if (currentMineAmount * minePrice > ConfigTool.MinimumTradeUsdtAmount)
+                        {
+                            if (mineAmountUnlimited ||
+                                (tradeMethod == TradeMethod.A_TO_B && currentMineAmount <= dragonExApiForA.UserAmounts.CoinAmount
+                                && currentMineAmount * minePrice * (1 + ConfigTool.TradeFee) <= dragonExApiForB.UserAmounts.BaseAmount) ||
+                                (tradeMethod == TradeMethod.B_TO_A && currentMineAmount <= dragonExApiForB.UserAmounts.CoinAmount
+                                && currentMineAmount * minePrice * (1 + ConfigTool.TradeFee) <= dragonExApiForA.UserAmounts.BaseAmount))
+                            {
+                                if (maxMineAmountUnlimited ||
+                                    currentSideMineAmountTotal + currentMineAmount <= maxMineAmount)
+                                {
+                                    // Do trading
+                                    long currentTS = DateTime.Now.Ticks;
+                                    if (tradeIntervalUnlimited || currentTS - lastTradeTime >= tradeInterval * 10000000)
+                                    {
+                                        lastTradeTime = currentTS;
+                                        logTxt.Clear();
+                                        lastTradeTime = currentTS;
+                                        tradingEntity = new TradingEntity();
+                                        tradingEntity.Buy = minePrice;
+                                        tradingEntity.Sell = minePrice;
+                                        tradingEntity.Amount = currentMineAmount;
+                                        switch (tradeMethod)
+                                        {
+                                            case TradeMethod.A_TO_B:
+                                                tradingThread = new Thread(ExecTradingAB);
+                                                break;
+                                            case TradeMethod.B_TO_A:
+                                                tradingThread = new Thread(ExecTradingBA);
+                                                break;
+                                        }
+                                        tradingThread.Start();
+                                    }
+                                }
+                                else
+                                {
+                                    // If mine amount is reached max amount, then go to another side
+                                    logTxt.Text = "";
+                                    ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_REACH_MAX_LIMIT_REVERT_SIDE"), true);
+                                    RevertTradeMethod();
                                 }
                             }
                             else
@@ -462,15 +685,9 @@ namespace DragonExMiningSampleCSharp
                                 if (!mineAmountUnlimited)
                                 {
                                     // If mine amount is not unlimited, then go to another side
-                                    switch (tradeMethod)
-                                    {
-                                        case TradeMethod.A_TO_B:
-                                            tradeMethod = TradeMethod.B_TO_A;
-                                            break;
-                                        case TradeMethod.B_TO_A:
-                                            tradeMethod = TradeMethod.A_TO_B;
-                                            break;
-                                    }
+                                    logTxt.Text = "";
+                                    ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_UNDER_MINIMUM_REVERT_SIDE"), true);
+                                    RevertTradeMethod();
                                 }
                             }
                         }
@@ -479,15 +696,9 @@ namespace DragonExMiningSampleCSharp
                             if (mineAmountUnlimited)
                             {
                                 // If mine amount is unlimited, then go to another side
-                                switch (tradeMethod)
-                                {
-                                    case TradeMethod.A_TO_B:
-                                        tradeMethod = TradeMethod.B_TO_A;
-                                        break;
-                                    case TradeMethod.B_TO_A:
-                                        tradeMethod = TradeMethod.A_TO_B;
-                                        break;
-                                }
+                                logTxt.Text = "";
+                                ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_UNDER_MINIMUM_REVERT_SIDE"), true);
+                                RevertTradeMethod();
                             }
                             else
                             {
@@ -496,6 +707,21 @@ namespace DragonExMiningSampleCSharp
                             }
                         }
                     }
+                    break;
+            }
+        }
+
+        private void RevertTradeMethod()
+        {
+            switch (tradeMethod)
+            {
+                case TradeMethod.A_TO_B:
+                    tradeMethod = TradeMethod.B_TO_A;
+                    currentSideMineAmountTotal = 0.0m;
+                    break;
+                case TradeMethod.B_TO_A:
+                    tradeMethod = TradeMethod.A_TO_B;
+                    currentSideMineAmountTotal = 0.0m;
                     break;
             }
         }
@@ -680,6 +906,59 @@ namespace DragonExMiningSampleCSharp
                         return;
                     }
                 }
+                if (isRandomMineAmount && !randomMineAmountToUnlimited)
+                {
+                    //When mine amount is random and mine amount to is unlimited, need to check mine amount to is over mine amount
+                    if (randomMineAmounTo < mineAmount)
+                    {
+                        isSet = false;
+                        autoTradeChk.Checked = false;
+                        MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_RANDOM_MINE_AMOUNT_TO_UNDER_FROM"),
+                            MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        return;
+                    }
+                }
+                if (!maxMineAmountUnlimited)
+                {
+                    //When max mine amount is not unlimited, need to check max mine amount is over minimum amount and is over mine amount
+                    //To ensure trading successfully, check all sell and buy price and amount is over
+                    if (mineAmountUnlimited)
+                    {
+                        if (dragonExApiForA.Tde.MaxBid.Price * maxMineAmount <= ConfigTool.MinimumTradeUsdtAmount
+                           || dragonExApiForA.Tde.MinAsk.Price * maxMineAmount <= ConfigTool.MinimumTradeUsdtAmount)
+                        {
+                            isSet = false;
+                            autoTradeChk.Checked = false;
+                            MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MAX_MINE_AMOUNT_UNDER_MINIMUM")
+                                + Environment.NewLine + MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MINE_AMOUNT_ENSURE"),
+                                MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (maxMineAmount < mineAmount)
+                        {
+                            isSet = false;
+                            autoTradeChk.Checked = false;
+                            MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MAX_MINE_AMOUNT_UNDER_MINE_AMOUNT")
+                                + Environment.NewLine + MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MINE_AMOUNT_ENSURE"),
+                                MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            return;
+                        }
+                        if (isRandomMineAmount && !randomMineAmountToUnlimited)
+                        {
+                            if (randomMineAmounTo > maxMineAmount)
+                            {
+                                isSet = false;
+                                autoTradeChk.Checked = false;
+                                MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_RANDOM_MINE_AMOUNT_TO_UNDER_FROM"),
+                                    MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                return;
+                            }
+                        }
+                    }
+                }
                 if (!tradeIntervalUnlimited)
                 {
                     //When trade interval is not unlimited, need to check whether trade interval is correct
@@ -699,11 +978,14 @@ namespace DragonExMiningSampleCSharp
                 tradeBtn.Enabled = !autoTrading;
                 pairCmb.Enabled = !autoTrading;
                 autoGenerateChk.Enabled = !autoTrading;
-                mineAmountUnlimitedChk.Enabled = !autoTrading;
+                mineAmountUnlimitedChk.Enabled = !autoTrading && !randomMineAmountChk.Checked;
                 tradeIntervalUnlimitedChk.Enabled = !autoTrading;
                 minePriceNud.Enabled = !autoTrading && !autoGenerateChk.Checked;
                 mineAmountNud.Enabled = !autoTrading && !mineAmountUnlimitedChk.Checked;
                 tradeIntervalNud.Enabled = !autoTrading && !tradeIntervalUnlimitedChk.Checked;
+                randomMineAmountChk.Enabled = !autoTrading;
+                mineAmountToNud.Enabled = !autoTrading && !mineAmountToUnlimitedChk.Checked;
+                mineAmountToUnlimitedChk.Enabled = !autoTrading;
             }
         }
 
@@ -768,6 +1050,51 @@ namespace DragonExMiningSampleCSharp
                     MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (isRandomMineAmount && !randomMineAmountToUnlimited)
+            {
+                //When mine amount is random and mine amount to is unlimited, need to check mine amount to is over mine amount
+                if (randomMineAmounTo < mineAmount)
+                {
+                    MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_RANDOM_MINE_AMOUNT_TO_UNDER_FROM"),
+                        MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    return;
+                }
+            }
+            if (!maxMineAmountUnlimited)
+            {
+                //When max mine amount is not unlimited, need to check max mine amount is over minimum amount and is over mine amount
+                //To ensure trading successfully, check all sell and buy price and amount is over
+                if (mineAmountUnlimited)
+                {
+                    if (dragonExApiForA.Tde.MaxBid.Price * maxMineAmount <= ConfigTool.MinimumTradeUsdtAmount
+                       || dragonExApiForA.Tde.MinAsk.Price * maxMineAmount <= ConfigTool.MinimumTradeUsdtAmount)
+                    {
+                        MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MAX_MINE_AMOUNT_UNDER_MINIMUM")
+                            + Environment.NewLine + MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MINE_AMOUNT_ENSURE"),
+                            MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        return;
+                    }
+                }
+                else
+                {
+                    if (maxMineAmount < mineAmount)
+                    {
+                        MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MAX_MINE_AMOUNT_UNDER_MINE_AMOUNT")
+                            + Environment.NewLine + MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_MINE_AMOUNT_ENSURE"),
+                            MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        return;
+                    }
+                    if (isRandomMineAmount && !randomMineAmountToUnlimited)
+                    {
+                        if (randomMineAmounTo > maxMineAmount)
+                        {
+                            MessageBox.Show(MultiLanConfig.Instance.GetKeyValue("ERROR_MSG_RANDOM_MINE_AMOUNT_TO_UNDER_FROM"),
+                                MultiLanConfig.Instance.GetKeyValue("TITLE_INCORECT_PARAMETERS"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            return;
+                        }
+                    }
+                }
+            }
             tradeBtn.Enabled = false;
             logTxt.Text = "";
             lastTradeTime = 0;
@@ -783,6 +1110,7 @@ namespace DragonExMiningSampleCSharp
             if (aToBSideRb.Checked)
             {
                 tradeSide = TradeSide.A_TO_B;
+                tradeMethod = TradeMethod.A_TO_B;
             }
         }
 
@@ -800,6 +1128,7 @@ namespace DragonExMiningSampleCSharp
             if (bToASideRb.Checked)
             {
                 tradeSide = TradeSide.B_TO_A;
+                tradeMethod = TradeMethod.B_TO_A;
             }
         }
 
@@ -959,6 +1288,8 @@ namespace DragonExMiningSampleCSharp
                         Thread.Sleep(2000);
                         GetUserInfo();
 
+                        currentSideMineAmountTotal += tradingEntity.Amount;
+
                         logMsg = "";
                         this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
                     }
@@ -1117,8 +1448,11 @@ namespace DragonExMiningSampleCSharp
                                 break;
                             }
                         }
+
                         Thread.Sleep(2000);
                         GetUserInfo();
+
+                        currentSideMineAmountTotal += tradingEntity.Amount;
 
                         logMsg = "";
                         this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, true });
@@ -1159,6 +1493,56 @@ namespace DragonExMiningSampleCSharp
                 lastTradeTime = DateTime.Now.Ticks;
                 isTrading = false;
             }
+        }
+
+        private void maxMineAmountUnlimitedChk_CheckedChanged(object sender, EventArgs e)
+        {
+            maxMineAmountUnlimited = maxMineAmountUnlimitedChk.Checked;
+            if (!maxMineAmountUnlimited)
+            {
+                maxMineAmountNud.Value = previousMaxMineAmount;
+            }
+            maxMineAmountNud.Enabled = !maxMineAmountUnlimited;
+        }
+
+        private void maxMineAmountNud_ValueChanged(object sender, EventArgs e)
+        {
+            if (!maxMineAmountUnlimited)
+            {
+                maxMineAmount = maxMineAmountNud.Value;
+                previousMaxMineAmount = maxMineAmount;
+            }
+        }
+
+        private void randomMineAmountChk_CheckedChanged(object sender, EventArgs e)
+        {
+            mineAmountUnlimitedChk.Enabled = !randomMineAmountChk.Checked;
+            if (randomMineAmountChk.Checked && mineAmountUnlimitedChk.Checked)
+            {
+                mineAmountUnlimitedChk.Checked = false;
+            }
+            mineAmountToNud.Enabled = randomMineAmountChk.Checked && !mineAmountToUnlimitedChk.Checked;
+            mineAmountToUnlimitedChk.Enabled = randomMineAmountChk.Checked;
+            isRandomMineAmount = randomMineAmountChk.Checked;
+        }
+
+        private void mineAmountToNud_ValueChanged(object sender, EventArgs e)
+        {
+            if (!randomMineAmountToUnlimited)
+            {
+                randomMineAmounTo = mineAmountToNud.Value;
+                previousRndomMineAmounTo = randomMineAmounTo;
+            }
+        }
+
+        private void mineAmountToUnlimitedChk_CheckedChanged(object sender, EventArgs e)
+        {
+            randomMineAmountToUnlimited = mineAmountToUnlimitedChk.Checked;
+            if (!randomMineAmountToUnlimited)
+            {
+                mineAmountToNud.Value = previousRndomMineAmounTo;
+            }
+            mineAmountToNud.Enabled = !randomMineAmountToUnlimited;
         }
     }
 }
