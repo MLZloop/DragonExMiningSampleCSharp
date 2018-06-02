@@ -100,6 +100,22 @@
             this.logLbl = new System.Windows.Forms.Label();
             this.tradeBtn = new System.Windows.Forms.Button();
             this.logTxt = new System.Windows.Forms.RichTextBox();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.lostCoinLimitLbl = new System.Windows.Forms.Label();
+            this.lostCoinLimitNud = new System.Windows.Forms.NumericUpDown();
+            this.lostCoinLimitUnlimitedChk = new System.Windows.Forms.CheckBox();
+            this.testControlLbl = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.tradeBaseToCoinFailedChk = new System.Windows.Forms.CheckBox();
+            this.tradeCoinToBaseFailed = new System.Windows.Forms.CheckBox();
+            this.checkAOrderFailedChk = new System.Windows.Forms.CheckBox();
+            this.checkBOrderFailedChk = new System.Windows.Forms.CheckBox();
+            this.cancelBOrderFailedChk = new System.Windows.Forms.CheckBox();
+            this.cancelAOrderFailedChk = new System.Windows.Forms.CheckBox();
+            this.lostCoinLbl = new System.Windows.Forms.Label();
+            this.plusCoinLbl = new System.Windows.Forms.Label();
+            this.totalLostLbl = new System.Windows.Forms.Label();
+            this.totalPlusLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.BidGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AskGrid)).BeginInit();
             this.panel5.SuspendLayout();
@@ -117,6 +133,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.mineAmountToNud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mineAmountNud)).BeginInit();
             this.tradeMethodPanel.SuspendLayout();
+            this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lostCoinLimitNud)).BeginInit();
+            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // BidGrid
@@ -180,6 +199,10 @@
             // panel5
             // 
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.totalPlusLbl);
+            this.panel5.Controls.Add(this.totalLostLbl);
+            this.panel5.Controls.Add(this.plusCoinLbl);
+            this.panel5.Controls.Add(this.lostCoinLbl);
             this.panel5.Controls.Add(this.updateUserInfoBtn);
             this.panel5.Controls.Add(this.setBaseBtn);
             this.panel5.Controls.Add(this.profitsCoinLbl);
@@ -201,10 +224,10 @@
             // 
             // updateUserInfoBtn
             // 
-            this.updateUserInfoBtn.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.updateUserInfoBtn.Location = new System.Drawing.Point(11, 237);
+            this.updateUserInfoBtn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.updateUserInfoBtn.Location = new System.Drawing.Point(3, 258);
             this.updateUserInfoBtn.Name = "updateUserInfoBtn";
-            this.updateUserInfoBtn.Size = new System.Drawing.Size(126, 47);
+            this.updateUserInfoBtn.Size = new System.Drawing.Size(146, 35);
             this.updateUserInfoBtn.TabIndex = 48;
             this.updateUserInfoBtn.Tag = "ML_WINFORM_BTN_UPDATE";
             this.updateUserInfoBtn.Text = "UPDATE";
@@ -213,10 +236,10 @@
             // 
             // setBaseBtn
             // 
-            this.setBaseBtn.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.setBaseBtn.Location = new System.Drawing.Point(11, 182);
+            this.setBaseBtn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.setBaseBtn.Location = new System.Drawing.Point(3, 220);
             this.setBaseBtn.Name = "setBaseBtn";
-            this.setBaseBtn.Size = new System.Drawing.Size(126, 46);
+            this.setBaseBtn.Size = new System.Drawing.Size(146, 35);
             this.setBaseBtn.TabIndex = 41;
             this.setBaseBtn.Tag = "ML_WINFORM_BTN_RESET";
             this.setBaseBtn.Text = "RESET";
@@ -533,6 +556,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.panel6);
             this.panel1.Controls.Add(this.maxMineAmountPanel);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.minePricePanel);
@@ -544,7 +568,7 @@
             this.panel1.Controls.Add(this.logTxt);
             this.panel1.Location = new System.Drawing.Point(13, 350);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(569, 313);
+            this.panel1.Size = new System.Drawing.Size(569, 342);
             this.panel1.TabIndex = 48;
             // 
             // maxMineAmountPanel
@@ -718,7 +742,7 @@
             this.tradeIntervalPanel.Controls.Add(this.tradeIntervalLbl);
             this.tradeIntervalPanel.Controls.Add(this.tradeIntervalNud);
             this.tradeIntervalPanel.Controls.Add(this.tradeIntervalUnlimitedChk);
-            this.tradeIntervalPanel.Location = new System.Drawing.Point(1, 155);
+            this.tradeIntervalPanel.Location = new System.Drawing.Point(1, 185);
             this.tradeIntervalPanel.Name = "tradeIntervalPanel";
             this.tradeIntervalPanel.Size = new System.Drawing.Size(350, 27);
             this.tradeIntervalPanel.TabIndex = 58;
@@ -894,7 +918,7 @@
             this.tradeMethodPanel.Controls.Add(this.aBBFSideRb);
             this.tradeMethodPanel.Controls.Add(this.bToASideRb);
             this.tradeMethodPanel.Controls.Add(this.aBAFSideRb);
-            this.tradeMethodPanel.Location = new System.Drawing.Point(1, 184);
+            this.tradeMethodPanel.Location = new System.Drawing.Point(1, 214);
             this.tradeMethodPanel.Name = "tradeMethodPanel";
             this.tradeMethodPanel.Size = new System.Drawing.Size(350, 52);
             this.tradeMethodPanel.TabIndex = 56;
@@ -972,7 +996,7 @@
             // tradeBtn
             // 
             this.tradeBtn.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tradeBtn.Location = new System.Drawing.Point(7, 242);
+            this.tradeBtn.Location = new System.Drawing.Point(7, 270);
             this.tradeBtn.Name = "tradeBtn";
             this.tradeBtn.Size = new System.Drawing.Size(341, 66);
             this.tradeBtn.TabIndex = 49;
@@ -986,15 +1010,210 @@
             this.logTxt.ForeColor = System.Drawing.Color.Red;
             this.logTxt.Location = new System.Drawing.Point(357, 35);
             this.logTxt.Name = "logTxt";
-            this.logTxt.Size = new System.Drawing.Size(199, 268);
+            this.logTxt.Size = new System.Drawing.Size(199, 301);
             this.logTxt.TabIndex = 3;
             this.logTxt.Text = "Test";
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.lostCoinLimitLbl);
+            this.panel6.Controls.Add(this.lostCoinLimitNud);
+            this.panel6.Controls.Add(this.lostCoinLimitUnlimitedChk);
+            this.panel6.Location = new System.Drawing.Point(1, 155);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(350, 27);
+            this.panel6.TabIndex = 59;
+            // 
+            // lostCoinLimitLbl
+            // 
+            this.lostCoinLimitLbl.AutoSize = true;
+            this.lostCoinLimitLbl.Location = new System.Drawing.Point(4, 6);
+            this.lostCoinLimitLbl.Name = "lostCoinLimitLbl";
+            this.lostCoinLimitLbl.Size = new System.Drawing.Size(101, 12);
+            this.lostCoinLimitLbl.TabIndex = 10;
+            this.lostCoinLimitLbl.Tag = "ML_WINFORM_LABEL_LOST_COIN_LIMIT";
+            this.lostCoinLimitLbl.Text = "Lost Coin Limit:";
+            // 
+            // lostCoinLimitNud
+            // 
+            this.lostCoinLimitNud.DecimalPlaces = 10;
+            this.lostCoinLimitNud.Enabled = false;
+            this.lostCoinLimitNud.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            655360});
+            this.lostCoinLimitNud.Location = new System.Drawing.Point(123, 3);
+            this.lostCoinLimitNud.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.lostCoinLimitNud.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            655360});
+            this.lostCoinLimitNud.Name = "lostCoinLimitNud";
+            this.lostCoinLimitNud.Size = new System.Drawing.Size(110, 21);
+            this.lostCoinLimitNud.TabIndex = 11;
+            this.lostCoinLimitNud.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.lostCoinLimitNud.ValueChanged += new System.EventHandler(this.lostCoinLimitNud_ValueChanged);
+            // 
+            // lostCoinLimitUnlimitedChk
+            // 
+            this.lostCoinLimitUnlimitedChk.AutoSize = true;
+            this.lostCoinLimitUnlimitedChk.Checked = true;
+            this.lostCoinLimitUnlimitedChk.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.lostCoinLimitUnlimitedChk.Location = new System.Drawing.Point(245, 5);
+            this.lostCoinLimitUnlimitedChk.Name = "lostCoinLimitUnlimitedChk";
+            this.lostCoinLimitUnlimitedChk.Size = new System.Drawing.Size(108, 16);
+            this.lostCoinLimitUnlimitedChk.TabIndex = 12;
+            this.lostCoinLimitUnlimitedChk.Tag = "ML_WINFORM_CHK_UNLIMITED_MAX";
+            this.lostCoinLimitUnlimitedChk.Text = "Unlimited(Max)";
+            this.lostCoinLimitUnlimitedChk.UseVisualStyleBackColor = true;
+            this.lostCoinLimitUnlimitedChk.CheckedChanged += new System.EventHandler(this.lostCoinLimitUnlimitedChk_CheckedChanged);
+            // 
+            // testControlLbl
+            // 
+            this.testControlLbl.AutoSize = true;
+            this.testControlLbl.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.testControlLbl.Location = new System.Drawing.Point(593, 9);
+            this.testControlLbl.Name = "testControlLbl";
+            this.testControlLbl.Size = new System.Drawing.Size(142, 21);
+            this.testControlLbl.TabIndex = 49;
+            this.testControlLbl.Tag = "ML_WINFORM_LABEL_TEST_OPTION";
+            this.testControlLbl.Text = "TEST OPTION";
+            // 
+            // panel7
+            // 
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.cancelBOrderFailedChk);
+            this.panel7.Controls.Add(this.cancelAOrderFailedChk);
+            this.panel7.Controls.Add(this.checkBOrderFailedChk);
+            this.panel7.Controls.Add(this.checkAOrderFailedChk);
+            this.panel7.Controls.Add(this.tradeCoinToBaseFailed);
+            this.panel7.Controls.Add(this.tradeBaseToCoinFailedChk);
+            this.panel7.Location = new System.Drawing.Point(593, 44);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(193, 648);
+            this.panel7.TabIndex = 45;
+            // 
+            // tradeBaseToCoinFailedChk
+            // 
+            this.tradeBaseToCoinFailedChk.AutoSize = true;
+            this.tradeBaseToCoinFailedChk.Location = new System.Drawing.Point(13, 16);
+            this.tradeBaseToCoinFailedChk.Name = "tradeBaseToCoinFailedChk";
+            this.tradeBaseToCoinFailedChk.Size = new System.Drawing.Size(174, 16);
+            this.tradeBaseToCoinFailedChk.TabIndex = 0;
+            this.tradeBaseToCoinFailedChk.Text = "Trade Base To Coin Failed";
+            this.tradeBaseToCoinFailedChk.UseVisualStyleBackColor = true;
+            this.tradeBaseToCoinFailedChk.CheckedChanged += new System.EventHandler(this.tradeBaseToCoinFailedChk_CheckedChanged);
+            // 
+            // tradeCoinToBaseFailed
+            // 
+            this.tradeCoinToBaseFailed.AutoSize = true;
+            this.tradeCoinToBaseFailed.Location = new System.Drawing.Point(13, 43);
+            this.tradeCoinToBaseFailed.Name = "tradeCoinToBaseFailed";
+            this.tradeCoinToBaseFailed.Size = new System.Drawing.Size(174, 16);
+            this.tradeCoinToBaseFailed.TabIndex = 1;
+            this.tradeCoinToBaseFailed.Text = "Trade Coin To Base Failed";
+            this.tradeCoinToBaseFailed.UseVisualStyleBackColor = true;
+            this.tradeCoinToBaseFailed.CheckedChanged += new System.EventHandler(this.tradeCoinToBaseFailed_CheckedChanged);
+            // 
+            // checkAOrderFailedChk
+            // 
+            this.checkAOrderFailedChk.AutoSize = true;
+            this.checkAOrderFailedChk.Location = new System.Drawing.Point(13, 68);
+            this.checkAOrderFailedChk.Name = "checkAOrderFailedChk";
+            this.checkAOrderFailedChk.Size = new System.Drawing.Size(144, 16);
+            this.checkAOrderFailedChk.TabIndex = 2;
+            this.checkAOrderFailedChk.Text = "Check A Order Failed";
+            this.checkAOrderFailedChk.UseVisualStyleBackColor = true;
+            this.checkAOrderFailedChk.CheckedChanged += new System.EventHandler(this.checkAOrderFailedChk_CheckedChanged);
+            // 
+            // checkBOrderFailedChk
+            // 
+            this.checkBOrderFailedChk.AutoSize = true;
+            this.checkBOrderFailedChk.Location = new System.Drawing.Point(13, 95);
+            this.checkBOrderFailedChk.Name = "checkBOrderFailedChk";
+            this.checkBOrderFailedChk.Size = new System.Drawing.Size(144, 16);
+            this.checkBOrderFailedChk.TabIndex = 3;
+            this.checkBOrderFailedChk.Text = "Check B Order Failed";
+            this.checkBOrderFailedChk.UseVisualStyleBackColor = true;
+            this.checkBOrderFailedChk.CheckedChanged += new System.EventHandler(this.checkBOrderFailedChk_CheckedChanged);
+            // 
+            // cancelBOrderFailedChk
+            // 
+            this.cancelBOrderFailedChk.AutoSize = true;
+            this.cancelBOrderFailedChk.Location = new System.Drawing.Point(13, 150);
+            this.cancelBOrderFailedChk.Name = "cancelBOrderFailedChk";
+            this.cancelBOrderFailedChk.Size = new System.Drawing.Size(150, 16);
+            this.cancelBOrderFailedChk.TabIndex = 5;
+            this.cancelBOrderFailedChk.Text = "Cancel B Order Failed";
+            this.cancelBOrderFailedChk.UseVisualStyleBackColor = true;
+            this.cancelBOrderFailedChk.CheckedChanged += new System.EventHandler(this.cancelBOrderFailedChk_CheckedChanged);
+            // 
+            // cancelAOrderFailedChk
+            // 
+            this.cancelAOrderFailedChk.AutoSize = true;
+            this.cancelAOrderFailedChk.Location = new System.Drawing.Point(13, 123);
+            this.cancelAOrderFailedChk.Name = "cancelAOrderFailedChk";
+            this.cancelAOrderFailedChk.Size = new System.Drawing.Size(150, 16);
+            this.cancelAOrderFailedChk.TabIndex = 4;
+            this.cancelAOrderFailedChk.Text = "Cancel A Order Failed";
+            this.cancelAOrderFailedChk.UseVisualStyleBackColor = true;
+            this.cancelAOrderFailedChk.CheckedChanged += new System.EventHandler(this.cancelAOrderFailedChk_CheckedChanged);
+            // 
+            // lostCoinLbl
+            // 
+            this.lostCoinLbl.AutoSize = true;
+            this.lostCoinLbl.Location = new System.Drawing.Point(9, 177);
+            this.lostCoinLbl.Name = "lostCoinLbl";
+            this.lostCoinLbl.Size = new System.Drawing.Size(71, 12);
+            this.lostCoinLbl.TabIndex = 49;
+            this.lostCoinLbl.Tag = "ML_WINFORM_LABEL_PROFITS_LOST";
+            this.lostCoinLbl.Text = "Total Lost:";
+            // 
+            // plusCoinLbl
+            // 
+            this.plusCoinLbl.AutoSize = true;
+            this.plusCoinLbl.Location = new System.Drawing.Point(9, 202);
+            this.plusCoinLbl.Name = "plusCoinLbl";
+            this.plusCoinLbl.Size = new System.Drawing.Size(71, 12);
+            this.plusCoinLbl.TabIndex = 50;
+            this.plusCoinLbl.Tag = "ML_WINFORM_LABEL_PROFITS_PLUS";
+            this.plusCoinLbl.Text = "Total Plus:";
+            // 
+            // totalLostLbl
+            // 
+            this.totalLostLbl.AutoSize = true;
+            this.totalLostLbl.Location = new System.Drawing.Point(86, 177);
+            this.totalLostLbl.Name = "totalLostLbl";
+            this.totalLostLbl.Size = new System.Drawing.Size(11, 12);
+            this.totalLostLbl.TabIndex = 51;
+            this.totalLostLbl.Text = "0";
+            // 
+            // totalPlusLbl
+            // 
+            this.totalPlusLbl.AutoSize = true;
+            this.totalPlusLbl.Location = new System.Drawing.Point(86, 202);
+            this.totalPlusLbl.Name = "totalPlusLbl";
+            this.totalPlusLbl.Size = new System.Drawing.Size(11, 12);
+            this.totalPlusLbl.TabIndex = 52;
+            this.totalPlusLbl.Text = "0";
             // 
             // DragonExMiningTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(596, 666);
+            this.ClientSize = new System.Drawing.Size(798, 699);
+            this.Controls.Add(this.panel7);
+            this.Controls.Add(this.testControlLbl);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel5);
@@ -1007,6 +1226,8 @@
             this.Controls.Add(this.AskGrid);
             this.Controls.Add(this.label38);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "DragonExMiningTool";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Tag = "ML_WINFORM_FORM_MINE_TOOL";
@@ -1040,6 +1261,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.mineAmountNud)).EndInit();
             this.tradeMethodPanel.ResumeLayout(false);
             this.tradeMethodPanel.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lostCoinLimitNud)).EndInit();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1118,5 +1344,21 @@
         private System.Windows.Forms.CheckBox mineAmountToUnlimitedChk;
         private System.Windows.Forms.NumericUpDown mineAmountToNud;
         private System.Windows.Forms.CheckBox randomMineAmountChk;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Label lostCoinLimitLbl;
+        private System.Windows.Forms.NumericUpDown lostCoinLimitNud;
+        private System.Windows.Forms.CheckBox lostCoinLimitUnlimitedChk;
+        private System.Windows.Forms.Label testControlLbl;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.CheckBox tradeBaseToCoinFailedChk;
+        private System.Windows.Forms.CheckBox tradeCoinToBaseFailed;
+        private System.Windows.Forms.CheckBox cancelBOrderFailedChk;
+        private System.Windows.Forms.CheckBox cancelAOrderFailedChk;
+        private System.Windows.Forms.CheckBox checkBOrderFailedChk;
+        private System.Windows.Forms.CheckBox checkAOrderFailedChk;
+        private System.Windows.Forms.Label plusCoinLbl;
+        private System.Windows.Forms.Label lostCoinLbl;
+        private System.Windows.Forms.Label totalPlusLbl;
+        private System.Windows.Forms.Label totalLostLbl;
     }
 }

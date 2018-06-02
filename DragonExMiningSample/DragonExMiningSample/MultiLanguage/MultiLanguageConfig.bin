@@ -30,6 +30,10 @@ ML_WINFORM_RD_A_TO_B_A_FIRST=A(First) <=> B
 ML_WINFORM_RD_A_TO_B_B_FIRST=A <=> B(First)
 ML_WINFORM_LABEL_LOG=Log:
 ML_WINFORM_FORM_MINE_TOOL=DragonEx Mining Tool
+ML_WINFORM_LABEL_LOST_COIN_LIMIT=Lost Coin Limit:
+ML_WINFORM_LABEL_TEST_OPTION=TEST OPTION
+ML_WINFORM_LABEL_PROFITS_LOST=Total Lost：
+ML_WINFORM_LABEL_PROFITS_PLUS=Total Plus：
 INFO_TRADING_AB_START_A=Start A=>B Trading with {0}A Sell:{1} Amount:{2}
 INFO_TRADING_AB_A_SELL_SUCCEED=A Sell Succeed
 INFO_TRADING_AB_START_B=B Buy:{0} Amount:{1}
@@ -54,6 +58,8 @@ LABEL_ALL=All
 TITLE_INCORECT_PARAMETERS=Incorrect parameters
 INFO_TRADING_AB_ENDED=Trading A=>B is ended.No Coin or Base is available.
 INFO_TRADING_BA_ENDED=Trading B=>A is ended.No Coin or Base is available.
+INFO_TRADING_ENDED_REACHED_LOST_LIMIT=Trading is ended.Lost Coin reached lost limit.
+INFO_TRADING_ENDED_REACHED_PLUS_LIMIT=Trading is ended.Plus Coin reached lost limit.
 INFO_TRADING_AB_REACH_MAX_AMOUNT=Trading A=>B is ended.The amount is reached the max amount limit.
 INFO_TRADING_BA_REACH_MAX_AMOUNT=Trading B=>A is ended.The amount is reached the max amount limit.
 INFO_TRADING_UNDER_MINIMUM=Trade is ended.Trade amount and price is under minimum.
@@ -63,6 +69,10 @@ INFO_TRADING_AB_CANCEL_A_SUCCEED=Cancel A order succeed.
 INFO_TRADING_AB_CANCEL_A_FAILED=Cancel A order failed.
 INFO_TRADING_BA_CANCEL_B_SUCCEED=Cancel B order succeed.
 INFO_TRADING_BA_CANCEL_B_FAILED=Cancel B order failed.
+INFO_TRADING_AB_CANCEL_B_SUCCEED=Cancel B order succeed.
+INFO_TRADING_AB_CANCEL_B_FAILED=Cancel B order failed.
+INFO_TRADING_BA_CANCEL_A_SUCCEED=Cancel A order succeed.
+INFO_TRADING_BA_CANCEL_A_FAILED=Cancel A order failed.
 ERROR_MSG_GETTING_USER_INFO=Exception happened when getting User Infos.Details:
 ERROR_MSG_GETTING_TICKER=Exception happened when getting Ticker.Details:
 ERROR_MSG_MINE_PRICE_INCORRECT=Mine price should between min ask and max bid.Please check and try again.
@@ -110,6 +120,10 @@ ML_WINFORM_RD_A_TO_B_A_FIRST=A(优先) <=> B
 ML_WINFORM_RD_A_TO_B_B_FIRST=A <=> B(优先)
 ML_WINFORM_LABEL_LOG=交易日志：
 ML_WINFORM_FORM_MINE_TOOL=龙网挖矿工具
+ML_WINFORM_LABEL_LOST_COIN_LIMIT=丢币损失控制：
+ML_WINFORM_LABEL_TEST_OPTION=测试配置：
+ML_WINFORM_LABEL_PROFITS_LOST=累计损失币数：
+ML_WINFORM_LABEL_PROFITS_PLUS=累计增加币数：
 INFO_TRADING_AB_START_A=开始交易A到B，时间：{0}A账户卖出价格：{1} 数量：{2}
 INFO_TRADING_AB_A_SELL_SUCCEED=A账户卖出成功
 INFO_TRADING_AB_START_B=B账户买入价格:{0} 数量:{1}
@@ -134,6 +148,8 @@ LABEL_ALL=全部
 TITLE_INCORECT_PARAMETERS=参数不正确
 INFO_TRADING_AB_ENDED=从A到B交易结束。没有可以交易的币或者基准币。
 INFO_TRADING_BA_ENDED=从B到A交易结束。没有可以交易的币或者基准币。
+INFO_TRADING_ENDED_REACHED_LOST_LIMIT=交易结束。总损失币数已经达到最大限制。请通过[设定基准值]来重置损失数量。
+INFO_TRADING_ENDED_REACHED_PLUS_LIMIT=交易结束。总增加币数已经达到最大限制。请通过[设定基准值]来重置损失数量。
 INFO_TRADING_AB_REACH_MAX_AMOUNT=从A到B交易结束。已经到达最大交易数量。
 INFO_TRADING_BA_REACH_MAX_AMOUNT=从B到A交易结束。已经到达最大交易数量。
 INFO_TRADING_UNDER_MINIMUM=交易结束。交易数量和价格小于最小交易数量价格。
@@ -143,6 +159,10 @@ INFO_TRADING_AB_CANCEL_A_SUCCEED=取消A账户卖出订单成功。
 INFO_TRADING_AB_CANCEL_A_FAILED=取消A账户卖出订单失败。可能已经成交。
 INFO_TRADING_BA_CANCEL_B_SUCCEED=取消B账户卖出订单成功。
 INFO_TRADING_BA_CANCEL_B_FAILED=取消B账户卖出订单失败。可能已经成交。
+INFO_TRADING_AB_CANCEL_B_SUCCEED=取消B账户买入订单成功。
+INFO_TRADING_AB_CANCEL_B_FAILED=取消B账户买入订单失败。可能已经成交。
+INFO_TRADING_BA_CANCEL_A_SUCCEED=取消A账户买入订单成功。
+INFO_TRADING_BA_CANCEL_A_FAILED=取消A账户买入订单失败。可能已经成交。
 ERROR_MSG_GETTING_USER_INFO=取得用户信息时例外发生。详细信息：
 ERROR_MSG_GETTING_TICKER=取得秒级信息时发生例外。详细信息：
 ERROR_MSG_MINE_PRICE_INCORRECT=交易价格必须在最大买价和最小卖价之间。请确认并重试。

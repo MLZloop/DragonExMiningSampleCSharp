@@ -54,5 +54,14 @@ namespace DragonExMiningSampleCSharp.Apis.Common
             NORMAL,
             TEST
         }
+
+        /// <summary>
+        /// Account Side
+        /// </summary>
+        public enum AccountSide
+        {
+            A,
+            B
+        }
     }
 }

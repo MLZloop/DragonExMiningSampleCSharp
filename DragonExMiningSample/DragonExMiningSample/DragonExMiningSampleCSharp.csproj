@@ -57,6 +57,7 @@
     <Compile Include="Apis\Common\Constants.cs" />
     <Compile Include="Apis\Common\EncryptUtil.cs" />
     <Compile Include="Apis\Common\Enums.cs" />
+    <Compile Include="Apis\Config\TestConfigTool.cs" />
     <Compile Include="Apis\Config\ConfigTool.cs" />
     <Compile Include="Apis\DragonEx\DragonExApiImpl.cs" />
     <Compile Include="Apis\DragonEx\DragonExConstants.cs" />

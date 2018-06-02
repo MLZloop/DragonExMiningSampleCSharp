@@ -28,12 +28,12 @@ namespace DragonExMiningSampleCSharp
         /// <summary>
         /// Api For A Account
         /// </summary>
-        private DragonExApiImpl dragonExApiForA = new DragonExApiImpl(DragonExConstants.SECRET_KEY_A, DragonExConstants.ACCESS_KEY_A);
+        private DragonExApiImpl dragonExApiForA = new DragonExApiImpl(DragonExConstants.SECRET_KEY_A, DragonExConstants.ACCESS_KEY_A, AccountSide.A);
 
         /// <summary>
         /// Api For B Account
         /// </summary>
-        private DragonExApiImpl dragonExApiForB = new DragonExApiImpl(DragonExConstants.SECRET_KEY_B, DragonExConstants.ACCESS_KEY_B);
+        private DragonExApiImpl dragonExApiForB = new DragonExApiImpl(DragonExConstants.SECRET_KEY_B, DragonExConstants.ACCESS_KEY_B, AccountSide.B);
 
         /// <summary>
         /// Thread for get market info
@@ -267,6 +267,9 @@ namespace DragonExMiningSampleCSharp
                 profitsBaseLbl.Text = profits.ProfitsBaseAmount.ToString();
                 profitsCoinLbl.Text = profits.ProfitsCoinAmount.ToString();
             }
+
+            totalLostLbl.Text = currentTradeLostCoinAmount.ToString();
+            totalPlusLbl.Text = currentTradePlusCoinAmount.ToString();
         }
 
         /// <summary>
@@ -346,6 +349,22 @@ namespace DragonExMiningSampleCSharp
         /// </summary>
         private void ExecTrading()
         {
+            if (!lostCoinLimitUnlimited)
+            {
+                if (currentTradeLostCoinAmount >= lostCoinLimit)
+                {
+                    logTxt.Text = "";
+                    ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_ENDED_REACHED_LOST_LIMIT"), true);
+                    return;
+                }
+                if (currentTradePlusCoinAmount >= lostCoinLimit)
+                {
+                    logTxt.Text = "";
+                    ResetTradingLog(MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_ENDED_REACHED_PLUS_LIMIT"), true);
+                    return;
+                }
+            }
+
             if (previousTradeMethod != tradeMethod)
             {
                 // If trade method changed.Reset current side total traded amount.
@@ -728,6 +747,11 @@ namespace DragonExMiningSampleCSharp
 
         private void DragonExMiningTool_Load(object sender, EventArgs e)
         {
+            if (ConfigTool.RunMode == RunMode.NORMAL)
+            {
+                this.Width = 608;
+            }
+
             var pairList = new List<string>();
             foreach(var item in ConfigTool.TradePairDict)
             {
@@ -865,6 +889,8 @@ namespace DragonExMiningSampleCSharp
         {
             profits.UpdateBase(dragonExApiForA.UserAmounts, dragonExApiForB.UserAmounts);
             ResetCurrentUserInfos();
+            currentTradeLostCoinAmount = 0.0m;
+            currentTradePlusCoinAmount = 0.0m;
         }
 
         private void updateUserInfoBtn_Click(object sender, EventArgs e)
@@ -1229,11 +1255,20 @@ namespace DragonExMiningSampleCSharp
                         // Cancel the sell order if all buy try is failed.
                         if (dragonExApiForA.CancelOrder(qte.OrderId))
                         {
+                            dragonExApiForA.UserAmounts.CoinAmount += CommonUtils.GetTruncateDecimal(tradingEntity.Amount, ConfigTool.Digits);
+                            dragonExApiForA.UserAmounts.BaseAmount -= CommonUtils.GetTruncateDecimal(
+                                tradingEntity.Amount * tradingEntity.Sell * (1 - ConfigTool.TradeFee), ConfigTool.Digits);
+                            this.Invoke(new ResetUI(ResetCurrentUserInfos), new object[] { });
+
                             logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_CANCEL_A_SUCCEED");
                             LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                             this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
-                        }else
+                        }
+                        else
                         {
+                            // Cancel failed.Add lost amount.
+                            currentTradeLostCoinAmount += tradingEntity.Amount;
+
                             logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_CANCEL_A_FAILED");
                             LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                             this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
@@ -1285,6 +1320,55 @@ namespace DragonExMiningSampleCSharp
                             Thread.Sleep(2000);
                         }
 
+                        if (aResult && !bResult)
+                        {
+                            // Cancel the buy order
+                            if (dragonExApiForB.CancelOrder(te.OrderId))
+                            {
+                                dragonExApiForB.UserAmounts.CoinAmount -= CommonUtils.GetTruncateDecimal(tradingEntity.Amount, ConfigTool.Digits);
+                                dragonExApiForB.UserAmounts.BaseAmount += CommonUtils.GetTruncateDecimal(
+                                    tradingEntity.Amount * tradingEntity.Buy * (1 + ConfigTool.TradeFee), ConfigTool.Digits);
+                                this.Invoke(new ResetUI(ResetCurrentUserInfos), new object[] { });
+
+                                // Cancel Succeed.Add lost amount.
+                                currentTradeLostCoinAmount += tradingEntity.Amount;
+
+                                logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_CANCEL_B_SUCCEED");
+                                LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                            }
+                            else
+                            {
+                                logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_CANCEL_B_FAILED");
+                                LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                            }
+                        }
+                        else if(bResult && !aResult)
+                        {
+                            // Cancel the sell order
+                            if (dragonExApiForA.CancelOrder(qte.OrderId))
+                            {
+                                dragonExApiForA.UserAmounts.CoinAmount += CommonUtils.GetTruncateDecimal(tradingEntity.Amount, ConfigTool.Digits);
+                                dragonExApiForA.UserAmounts.BaseAmount -= CommonUtils.GetTruncateDecimal(
+                                    tradingEntity.Amount * tradingEntity.Sell * (1 - ConfigTool.TradeFee), ConfigTool.Digits);
+                                this.Invoke(new ResetUI(ResetCurrentUserInfos), new object[] { });
+
+                                // Cancel Succeed.Add plus amount.
+                                currentTradePlusCoinAmount += tradingEntity.Amount;
+
+                                logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_CANCEL_A_SUCCEED");
+                                LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                            }
+                            else
+                            {
+                                logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_AB_CANCEL_A_FAILED");
+                                LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                            }
+                        }
+
                         Thread.Sleep(2000);
                         GetUserInfo();
 
@@ -1327,6 +1411,7 @@ namespace DragonExMiningSampleCSharp
             {
                 lastTradeTime = DateTime.Now.Ticks;
                 isTrading = false;
+                this.Invoke(new ResetUI(ResetCurrentUserInfos), new object[] { });
             }
         }
 
@@ -1394,12 +1479,20 @@ namespace DragonExMiningSampleCSharp
                         // Cancel the sell order if all buy try is failed.
                         if (dragonExApiForB.CancelOrder(te.OrderId))
                         {
+                            dragonExApiForB.UserAmounts.CoinAmount += CommonUtils.GetTruncateDecimal(tradingEntity.Amount, ConfigTool.Digits);
+                            dragonExApiForB.UserAmounts.BaseAmount -= CommonUtils.GetTruncateDecimal(
+                                tradingEntity.Amount * tradingEntity.Sell * (1 - ConfigTool.TradeFee), ConfigTool.Digits);
+                            this.Invoke(new ResetUI(ResetCurrentUserInfos), new object[] { });
+
                             logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_CANCEL_B_SUCCEED");
                             LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                             this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
                         }
                         else
                         {
+                            // Cancel failed.Add lost amount.
+                            currentTradeLostCoinAmount += tradingEntity.Amount;
+
                             logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_CANCEL_B_FAILED");
                             LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
                             this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
@@ -1449,6 +1542,55 @@ namespace DragonExMiningSampleCSharp
                             }
                         }
 
+                        if (aResult && !bResult)
+                        {
+                            // Cancel the sell order
+                            if (dragonExApiForB.CancelOrder(te.OrderId))
+                            {
+                                dragonExApiForB.UserAmounts.CoinAmount += CommonUtils.GetTruncateDecimal(tradingEntity.Amount, ConfigTool.Digits);
+                                dragonExApiForB.UserAmounts.BaseAmount -= CommonUtils.GetTruncateDecimal(
+                                    tradingEntity.Amount * tradingEntity.Sell * (1 - ConfigTool.TradeFee), ConfigTool.Digits);
+                                this.Invoke(new ResetUI(ResetCurrentUserInfos), new object[] { });
+
+                                // Cancel Succeed.Add plus amount.
+                                currentTradePlusCoinAmount += tradingEntity.Amount;
+
+                                logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_CANCEL_B_SUCCEED");
+                                LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                            }
+                            else
+                            {
+                                logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_CANCEL_B_FAILED");
+                                LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                            }
+                        }
+                        else if (bResult && !aResult)
+                        {
+                            // Cancel the buy order
+                            if (dragonExApiForA.CancelOrder(qte.OrderId))
+                            {
+                                dragonExApiForA.UserAmounts.CoinAmount -= CommonUtils.GetTruncateDecimal(tradingEntity.Amount, ConfigTool.Digits);
+                                dragonExApiForA.UserAmounts.BaseAmount += CommonUtils.GetTruncateDecimal(
+                                    tradingEntity.Amount * tradingEntity.Buy * (1 + ConfigTool.TradeFee), ConfigTool.Digits);
+                                this.Invoke(new ResetUI(ResetCurrentUserInfos), new object[] { });
+
+                                // Cancel Succeed.Add lost amount.
+                                currentTradeLostCoinAmount += tradingEntity.Amount;
+
+                                logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_CANCEL_A_SUCCEED");
+                                LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                            }
+                            else
+                            {
+                                logMsg = MultiLanConfig.Instance.GetKeyValue("INFO_TRADING_BA_CANCEL_A_FAILED");
+                                LogTool.LogTradeInfo(logMsg, LogLevels.TRACE);
+                                this.Invoke(new ResetTradingInfos(ResetTradingLog), new object[] { logMsg, false });
+                            }
+                        }
+
                         Thread.Sleep(2000);
                         GetUserInfo();
 
@@ -1492,6 +1634,7 @@ namespace DragonExMiningSampleCSharp
             {
                 lastTradeTime = DateTime.Now.Ticks;
                 isTrading = false;
+                this.Invoke(new ResetUI(ResetCurrentUserInfos), new object[] { });
             }
         }
 
@@ -1543,6 +1686,80 @@ namespace DragonExMiningSampleCSharp
                 mineAmountToNud.Value = previousRndomMineAmounTo;
             }
             mineAmountToNud.Enabled = !randomMineAmountToUnlimited;
+        }
+
+        /// <summary>
+        /// Lost coin limit unlimited
+        /// </summary>
+        private bool lostCoinLimitUnlimited = true;
+
+        /// <summary>
+        /// Lost coin limit
+        /// </summary>
+        private decimal lostCoinLimit = 100.0m;
+
+        /// <summary>
+        /// Previous Lost coin limit
+        /// </summary>
+        private decimal previousLostCoinLimit = 100.0m;
+
+        /// <summary>
+        /// Current trade lost coin amount
+        /// </summary>
+        private decimal currentTradeLostCoinAmount = 0.0m;
+
+        /// <summary>
+        /// Current trade plus coin amount
+        /// </summary>
+        private decimal currentTradePlusCoinAmount = 0.0m;
+
+        private void lostCoinLimitUnlimitedChk_CheckedChanged(object sender, EventArgs e)
+        {
+            lostCoinLimitUnlimited = lostCoinLimitUnlimitedChk.Checked;
+            if (!lostCoinLimitUnlimited)
+            {
+                lostCoinLimitNud.Value = previousLostCoinLimit;
+            }
+            lostCoinLimitNud.Enabled = !lostCoinLimitUnlimited;
+        }
+
+        private void lostCoinLimitNud_ValueChanged(object sender, EventArgs e)
+        {
+            if (!lostCoinLimitUnlimited)
+            {
+                lostCoinLimit = lostCoinLimitNud.Value;
+                previousLostCoinLimit = lostCoinLimit;
+            }
+        }
+
+        private void tradeBaseToCoinFailedChk_CheckedChanged(object sender, EventArgs e)
+        {
+            TestConfigTool.TradeBaseToCoinFailed = tradeBaseToCoinFailedChk.Checked;
+        }
+
+        private void tradeCoinToBaseFailed_CheckedChanged(object sender, EventArgs e)
+        {
+            TestConfigTool.TradeCoinToBaseFailed = tradeCoinToBaseFailed.Checked;
+        }
+
+        private void checkAOrderFailedChk_CheckedChanged(object sender, EventArgs e)
+        {
+            TestConfigTool.CheckAOrderFailed = checkAOrderFailedChk.Checked;
+        }
+
+        private void checkBOrderFailedChk_CheckedChanged(object sender, EventArgs e)
+        {
+            TestConfigTool.CheckBOrderFailed = checkBOrderFailedChk.Checked;
+        }
+
+        private void cancelAOrderFailedChk_CheckedChanged(object sender, EventArgs e)
+        {
+            TestConfigTool.CancelAOrderFailed = cancelAOrderFailedChk.Checked;
+        }
+
+        private void cancelBOrderFailedChk_CheckedChanged(object sender, EventArgs e)
+        {
+            TestConfigTool.CancelBOrderFailed = cancelBOrderFailedChk.Checked;
         }
     }
 }

@@ -19,6 +19,11 @@ namespace DragonExMiningSampleCSharp.Apis.DragonEx
     class DragonExApiImpl
     {
         /// <summary>
+        /// Name
+        /// </summary>
+        private AccountSide name;
+
+        /// <summary>
         /// Instance for private Apis
         /// </summary>
         private DragonExPrivateApis privateApiInstance = null;
@@ -46,8 +51,9 @@ namespace DragonExMiningSampleCSharp.Apis.DragonEx
         /// </summary>
         /// <param name="secretKey"></param>
         /// <param name="accessKey"></param>
-        public DragonExApiImpl(string secretKey, string accessKey)
+        public DragonExApiImpl(string secretKey, string accessKey, AccountSide name)
         {
+            this.name = name;
             privateApiInstance = new DragonExPrivateApis(secretKey, accessKey);
             UserAmounts = new UserAmounts(Constants.TRADE_NAME_DRAGON_EX, 0, 0);
         }
@@ -107,6 +113,14 @@ namespace DragonExMiningSampleCSharp.Apis.DragonEx
             {
                 if(ConfigTool.RunMode == RunMode.TEST)
                 {
+                    if (TestConfigTool.CheckAOrderFailed && name == AccountSide.A)
+                    {
+                        return false;
+                    }
+                    else if (TestConfigTool.CheckBOrderFailed && name == AccountSide.B)
+                    {
+                        return false;
+                    }
                     return true;
                 }
                 else
@@ -169,6 +183,18 @@ namespace DragonExMiningSampleCSharp.Apis.DragonEx
         {
             try
             {
+                if (ConfigTool.RunMode == RunMode.TEST)
+                {
+                    if (TestConfigTool.CancelAOrderFailed && name == AccountSide.A)
+                    {
+                        return false;
+                    }
+                    else if (TestConfigTool.CancelBOrderFailed && name == AccountSide.B)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
                 XElement data = privateApiInstance.CancelOrder(ConfigTool.CurrentPair.Value, orderId);
                 var id = data.Element("data").Element("order_id");
                 if (id != null && !string.IsNullOrEmpty(id.Value))
@@ -212,16 +238,27 @@ namespace DragonExMiningSampleCSharp.Apis.DragonEx
             {
                 if(ConfigTool.RunMode == RunMode.TEST)
                 {
-                    // If test
-                    var receivedValue = amount.ToString();
-                    var remainsValue = amount.ToString();
-                    var orderId = "1";
-                    var receivedD = (decimal)double.Parse(receivedValue);
-                    var remainsD = (decimal)double.Parse(remainsValue);
-                    te.Received = receivedD;
-                    te.Remains = remainsD;
-                    te.OrderId = orderId;
-                    isSucceeded = true;
+                    if (side == TradeTypes.BUY && TestConfigTool.TradeBaseToCoinFailed)
+                    {
+                        return null;
+                    }
+                    else if (side == TradeTypes.SELL && TestConfigTool.TradeCoinToBaseFailed)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        // If test
+                        var receivedValue = amount.ToString();
+                        var remainsValue = amount.ToString();
+                        var orderId = "1";
+                        var receivedD = (decimal)double.Parse(receivedValue);
+                        var remainsD = (decimal)double.Parse(remainsValue);
+                        te.Received = receivedD;
+                        te.Remains = remainsD;
+                        te.OrderId = orderId;
+                        isSucceeded = true;
+                    }
                 }
                 else
                 {
