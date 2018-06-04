@@ -33,7 +33,7 @@
             this.bBidLbl = new System.Windows.Forms.Label();
             this.aAskLbl = new System.Windows.Forms.Label();
             this.AskGrid = new System.Windows.Forms.DataGridView();
-            this.panel5 = new System.Windows.Forms.Panel();
+            this.profitsPanel = new System.Windows.Forms.Panel();
             this.updateUserInfoBtn = new System.Windows.Forms.Button();
             this.setBaseBtn = new System.Windows.Forms.Button();
             this.profitsCoinLbl = new System.Windows.Forms.Label();
@@ -118,7 +118,7 @@
             this.totalPlusLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.BidGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AskGrid)).BeginInit();
-            this.panel5.SuspendLayout();
+            this.profitsPanel.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -196,31 +196,31 @@
             this.AskGrid.TabIndex = 13;
             this.AskGrid.TabStop = false;
             // 
-            // panel5
+            // profitsPanel
             // 
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.totalPlusLbl);
-            this.panel5.Controls.Add(this.totalLostLbl);
-            this.panel5.Controls.Add(this.plusCoinLbl);
-            this.panel5.Controls.Add(this.lostCoinLbl);
-            this.panel5.Controls.Add(this.updateUserInfoBtn);
-            this.panel5.Controls.Add(this.setBaseBtn);
-            this.panel5.Controls.Add(this.profitsCoinLbl);
-            this.panel5.Controls.Add(this.profitsForCoinLbl);
-            this.panel5.Controls.Add(this.profitsBaseLbl);
-            this.panel5.Controls.Add(this.profitsForBaseLbl);
-            this.panel5.Controls.Add(this.currentCoinLbl);
-            this.panel5.Controls.Add(this.profitsCoinCurrentLbl);
-            this.panel5.Controls.Add(this.baseCoinLbl);
-            this.panel5.Controls.Add(this.profitsAllCoinLbl);
-            this.panel5.Controls.Add(this.currentBaseLbl);
-            this.panel5.Controls.Add(this.baseBaseLbl);
-            this.panel5.Controls.Add(this.profitsBaseCurrentLbl);
-            this.panel5.Controls.Add(this.profitsAllBaseLbl);
-            this.panel5.Location = new System.Drawing.Point(427, 44);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(155, 299);
-            this.panel5.TabIndex = 46;
+            this.profitsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.profitsPanel.Controls.Add(this.totalPlusLbl);
+            this.profitsPanel.Controls.Add(this.totalLostLbl);
+            this.profitsPanel.Controls.Add(this.plusCoinLbl);
+            this.profitsPanel.Controls.Add(this.lostCoinLbl);
+            this.profitsPanel.Controls.Add(this.updateUserInfoBtn);
+            this.profitsPanel.Controls.Add(this.setBaseBtn);
+            this.profitsPanel.Controls.Add(this.profitsCoinLbl);
+            this.profitsPanel.Controls.Add(this.profitsForCoinLbl);
+            this.profitsPanel.Controls.Add(this.profitsBaseLbl);
+            this.profitsPanel.Controls.Add(this.profitsForBaseLbl);
+            this.profitsPanel.Controls.Add(this.currentCoinLbl);
+            this.profitsPanel.Controls.Add(this.profitsCoinCurrentLbl);
+            this.profitsPanel.Controls.Add(this.baseCoinLbl);
+            this.profitsPanel.Controls.Add(this.profitsAllCoinLbl);
+            this.profitsPanel.Controls.Add(this.currentBaseLbl);
+            this.profitsPanel.Controls.Add(this.baseBaseLbl);
+            this.profitsPanel.Controls.Add(this.profitsBaseCurrentLbl);
+            this.profitsPanel.Controls.Add(this.profitsAllBaseLbl);
+            this.profitsPanel.Location = new System.Drawing.Point(427, 44);
+            this.profitsPanel.Name = "profitsPanel";
+            this.profitsPanel.Size = new System.Drawing.Size(155, 299);
+            this.profitsPanel.TabIndex = 46;
             // 
             // updateUserInfoBtn
             // 
@@ -1216,7 +1216,7 @@
             this.Controls.Add(this.testControlLbl);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.profitsPanel);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.panel3);
@@ -1236,8 +1236,8 @@
             this.Load += new System.EventHandler(this.DragonExMiningTool_Load);
             ((System.ComponentModel.ISupportInitialize)(this.BidGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AskGrid)).EndInit();
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
+            this.profitsPanel.ResumeLayout(false);
+            this.profitsPanel.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -1277,7 +1277,7 @@
         private System.Windows.Forms.Label bBidLbl;
         private System.Windows.Forms.Label aAskLbl;
         private System.Windows.Forms.DataGridView AskGrid;
-        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel profitsPanel;
         private System.Windows.Forms.Button updateUserInfoBtn;
         private System.Windows.Forms.Button setBaseBtn;
         private System.Windows.Forms.Label profitsCoinLbl;

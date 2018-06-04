@@ -749,7 +749,7 @@ namespace DragonExMiningSampleCSharp
         {
             if (ConfigTool.RunMode == RunMode.NORMAL)
             {
-                this.Width = 608;
+                this.Width = profitsPanel.Right + 22;
             }
 
             var pairList = new List<string>();
